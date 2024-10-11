@@ -134,12 +134,9 @@ def create_directories(combinations, excluded_pairs, model):
 
         # Adjust sed command based on the OS
         if is_mac:
-            sed_command = ['sed', '-i', '', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh']
+            subprocess.run(['sed', '-i', '', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh'], check=True)
         else:
-            sed_command = ['sed', '-i', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh']
-
-        # Run the appropriate command
-        subprocess.run(sed_command, check=True)
+            subprocess.run(['sed', '-i', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh'], check=True)
 
         # Copy submit file
         shutil.copy2('./shell/submit_template.sh', current_path + '/' + 'submit.sh')
@@ -147,7 +144,11 @@ def create_directories(combinations, excluded_pairs, model):
         search_term = "job_name"
         replacement = dir_name + "_" + model_str
 
-        subprocess.run(['sed', '-i', '', f's/{search_term}/{replacement}/g', current_path + '/' + 'submit.sh'], check=True)
+        # Adjust sed command based on the OS
+        if is_mac:
+            subprocess.run(['sed', '-i', '', f's/{search_term}/{replacement}/g', current_path + '/' + 'submit.sh'], check=True)
+        else:
+            subprocess.run(['sed', '-i', f's/{search_term}/{replacement}/g', current_path + '/' + 'submit.sh'], check=True)
 
         # Append to batch file if the flag is True
         if batch_submit:
