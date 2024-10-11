@@ -154,7 +154,7 @@ def create_directories(combinations, excluded_pairs, model):
         # Append to batch file if the flag is True
         if batch_submit:
             with open(batch_file_path, 'a') as batch_file:
-                batch_file.write(f"cd {current_path}\nsbatch submit.sh\n\n")
+                batch_file.write(f"cd ./{dir_name}\nsbatch submit.sh\n\n")
 
         case_num += 1
 
