@@ -108,17 +108,17 @@ def create_directories(combinations, excluded_pairs, model):
         dir_name = f"s{shear_str}_v{veer_str}"
         current_path = base_dir + '/' + model + '/' + dir_name
 
-        # Create case directory
+        # TASK: Create case directory
         os.makedirs(current_path, exist_ok=True)
 
-        # Create symbolic links to executables
+        # TASK: Create symbolic links to executables
         subprocess.run([f"ln -s {wrf_path}/main/wrf.exe {current_path}"], shell=True)
         subprocess.run([f"ln -s {wrf_path}/main/ideal.exe {current_path}"], shell=True)
         subprocess.run([f"ln -s {wrf_path}/run/README.namelist {current_path}"], shell=True)
         subprocess.run([f"ln -s {wrf_path}/run/README.physics_files {current_path}"], shell=True)
         subprocess.run([f"ln -s {wrf_path}/run/README.tslist {current_path}"], shell=True)
 
-        # Copy basic files
+        # TASK: Copy basic files
         for item in os.listdir('./case'):
             source_path = os.path.join('./case', item)
             destination_path = os.path.join(current_path, item)
@@ -130,47 +130,52 @@ def create_directories(combinations, excluded_pairs, model):
                 # If it's a file, copy it
                 shutil.copy2(source_path, destination_path)
 
-        # Copy NAMELIST file
+        # TASK: Copy NAMELIST file
         shutil.copy2('./namelists/' + model_str + '_namelist.input', current_path + '/' + 'namelist.input')
 
-        # Copy SOUNDING file
+        # TASK: Copy SOUNDING file
         shutil.copy2(sounding_path + '/input_sounding_' + dir_name, current_path + '/' + 'input_sounding')
 
-        # Copy TUBRINE_IJ file
+        # TASK: Copy TUBRINE_IJ file
         shutil.copy2('./turbines/' + model_str + '_windturbines-ij.dat', current_path + '/windturbines-ij.dat')
 
-        # Copy MODULE LOAD file
+        # TASK: Copy MODULE LOAD file
         shutil.copy2('./shell/export_libs_load_modules.sh', current_path + '/' + 'export_libs_load_modules.sh')
 
         search_term = "lib_path"
         escaped_lib_path = library_path.replace("/", "\\/")
 
-        # Adjust sed command based on the OS
+        # command varies by OS
         if is_mac:
             subprocess.run(['sed', '-i', '', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh'], check=True)
         else:
             subprocess.run(['sed', '-i', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh'], check=True)
 
-        # Copy submit file
+        # TASK: Copy submit file
         shutil.copy2('./shell/submit_template.sh', current_path + '/' + 'submit.sh')
 
         search_term = "job_name"
         replacement = dir_name + "_" + model_str
 
-        # Adjust sed command based on the OS
+        # command varies by OS
         if is_mac:
             subprocess.run(['sed', '-i', '', f's/{search_term}/{replacement}/g', current_path + '/' + 'submit.sh'], check=True)
         else:
             subprocess.run(['sed', '-i', f's/{search_term}/{replacement}/g', current_path + '/' + 'submit.sh'], check=True)
 
-        # Append to batch file if the flag is True
+        # TASK: Append to batch file if the flag is True
         if batch_submit:
             with open(batch_file_path, 'a') as batch_file:
                 batch_file.write(f"cd {base_dir}/{model}/{dir_name}\nsbatch submit.sh\n\n")
 
+        # TASK: grant permissions to submit shell scripts
         os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
         case_num += 1
+
+# ==================================================================
+# Execute code for each model selected
+# ==================================================================
 
 if GAD:
     print("\n\n=========================")
@@ -196,7 +201,6 @@ if GADrs:
 print("\n\n=========================")
 print("========= DONE. =========")
 print("=========================\n\n")
-
 
 # ==================================================================
 # END OF SCRIPT
