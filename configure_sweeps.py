@@ -24,7 +24,7 @@ GADrs = True
 base_dir      = "./runs"
 wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
 library_path  = "/home/x-smata/libraries/libinsdir"
-sounding_path = ""
+sounding_path = "/anvil/scratch/x-smata/postprocessing/results"
 
 batch_submit  = True
 
