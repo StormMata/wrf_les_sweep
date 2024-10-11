@@ -27,7 +27,7 @@ GAD   = True
 GAL   = True
 GADrs = False
 
-base_dir      = "./runs"
+base_dir      = "/anvil/scratch/x-smata/wrf_les_sweep/runs"
 wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
 library_path  = "/home/x-smata/libraries/libinsdir"
 sounding_path = "/anvil/scratch/x-smata/postprocessing/results"
@@ -157,7 +157,7 @@ def create_directories(combinations, excluded_pairs, model):
         # Append to batch file if the flag is True
         if batch_submit:
             with open(batch_file_path, 'a') as batch_file:
-                batch_file.write(f"cd ./{dir_name}\nsbatch submit.sh\n\n")
+                batch_file.write(f"cd {base_dir}/{model}/{dir_name}\nsbatch submit.sh\n\n")
 
         os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
