@@ -159,26 +159,26 @@ def create_directories(combinations, excluded_pairs, model):
         case_num += 1
 
 if GAD:
-    print("=========================")
+    print("\n\n=========================")
     print("========== GAD ==========")
     print("=========================")
     
     create_directories(combinations, excluded_pairs, 'gad_sweep')
     
 if GAL:
-    print("=========================")
+    print("\n\n=========================")
     print("========== GAL ==========")
     print("=========================")
 
     create_directories(combinations, excluded_pairs, 'gal_sweep')
 
 if GADrs:
-    print("=========================")
+    print("\n\n=========================")
     print("========= GADrs =========")
     print("=========================")
 
     create_directories(combinations, excluded_pairs, 'gadrs_sweep')
 
-print("=========================")
+print("\n\n=========================")
 print("========= DONE. =========")
 print("=========================")
