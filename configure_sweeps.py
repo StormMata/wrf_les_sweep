@@ -8,6 +8,7 @@ from rich.table import Table
 from rich.console import Console
 import platform
 import re
+import stat
 
 #shear = [-4, -2, 0, 2, 4]
 #veer  = [-4, -2, 0, 2, 4]
@@ -155,6 +156,8 @@ def create_directories(combinations, excluded_pairs, model):
         if batch_submit:
             with open(batch_file_path, 'a') as batch_file:
                 batch_file.write(f"cd ./{dir_name}\nsbatch submit.sh\n\n")
+
+        os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
         case_num += 1
 
