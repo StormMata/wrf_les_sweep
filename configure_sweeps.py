@@ -128,18 +128,18 @@ def create_directories(combinations, excluded_pairs, model):
         shutil.copy2('./shell/export_libs_load_modules.sh', current_path + '/' + 'export_libs_load_modules.sh')
 
         search_term = "lib_path"
+        escaped_lib_path = library_path.replace("/", "\\/")
 
         # subprocess.run(['sed', '-i', '', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/' + 'export_libs_load_modules.sh'], check=True)
 
         # Adjust sed command based on the OS
         if is_mac:
-            sed_command = ['sed', '-i', '', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/export_libs_load_modules.sh']
+            sed_command = ['sed', '-i', '', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh']
         else:
-            sed_command = ['sed', '-i', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/export_libs_load_modules.sh']
+            sed_command = ['sed', '-i', f's/{search_term}/{escaped_lib_path}/g', current_path + '/export_libs_load_modules.sh']
 
         # Run the appropriate command
         subprocess.run(sed_command, check=True)
-
 
         # Copy submit file
         shutil.copy2('./shell/submit_template.sh', current_path + '/' + 'submit.sh')
