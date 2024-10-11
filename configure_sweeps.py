@@ -115,22 +115,20 @@ def create_directories(combinations, excluded_pairs, model):
                 # If it's a file, copy it
                 shutil.copy2(source_path, destination_path)
 
-        # Copy namelist file
+        # Copy NAMELIST file
         shutil.copy2('./namelists/' + model_str + '_namelist.input', current_path + '/' + 'namelist.input')
 
-        # Copy sounding file
-        # shutil.copy2(sounding_path + '/soun  ding_' + dir_name, current_path + '/' + 'namelist.input')
+        # Copy SOUNDING file
+        shutil.copy2(sounding_path + '/sounding_' + dir_name, current_path + '/' + 'namelist.input')
 
-        # Copy turbine location file
+        # Copy TUBRINE_IJ file
         shutil.copy2('./turbines/' + model_str + '_windturbines-ij.dat', current_path + '/windturbines-ij.dat')
 
-        # Copy module shell script file
+        # Copy MODULE LOAD file
         shutil.copy2('./shell/export_libs_load_modules.sh', current_path + '/' + 'export_libs_load_modules.sh')
 
         search_term = "lib_path"
         escaped_lib_path = library_path.replace("/", "\\/")
-
-        # subprocess.run(['sed', '-i', '', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/' + 'export_libs_load_modules.sh'], check=True)
 
         # Adjust sed command based on the OS
         if is_mac:
