@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import itertools
+
 import os
-import subprocess
-import shutil
-from rich.table import Table
-from rich.console import Console
-import platform
 import re
 import stat
+import shutil
+import platform
+import itertools
+import subprocess
+
+from rich.table import Table
+from rich.console import Console
 
 #shear = [-4, -2, 0, 2, 4]
 #veer  = [-4, -2, 0, 2, 4]
