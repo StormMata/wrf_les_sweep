@@ -81,8 +81,6 @@ for pair in combinations:
 # Print the table to the console
 console.print(table)
 
-# print("Directories created.")
-
 def create_directories(combinations, excluded_pairs, model):
 
     os.makedirs(base_dir + '/' + model, exist_ok=True)
