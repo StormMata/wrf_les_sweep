@@ -9,8 +9,11 @@ from rich.console import Console
 import platform
 import re
 
-shear = [-4, -2, 0, 2, 4]
-veer  = [-4, -2, 0, 2, 4]
+#shear = [-4, -2, 0, 2, 4]
+#veer  = [-4, -2, 0, 2, 4]
+
+shear = [0]
+veer  = [0]
 
 excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
                   (-4, 2),  (4, 2),
@@ -175,3 +178,7 @@ if GADrs:
     print("=========================")
 
     create_directories(combinations, excluded_pairs, 'gadrs_sweep')
+
+print("=========================")
+print("========= DONE. =========")
+print("=========================")
