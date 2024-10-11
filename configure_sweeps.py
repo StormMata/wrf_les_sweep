@@ -125,7 +125,7 @@ def create_directories(combinations, excluded_pairs, model):
         shutil.copy2('./namelists/' + model_str + '_namelist.input', current_path + '/' + 'namelist.input')
 
         # Copy SOUNDING file
-        shutil.copy2(sounding_path + '/input_sounding_' + dir_name, current_path + '/' + 'namelist.input')
+        shutil.copy2(sounding_path + '/input_sounding_' + dir_name, current_path + '/' + 'input_sounding')
 
         # Copy TUBRINE_IJ file
         shutil.copy2('./turbines/' + model_str + '_windturbines-ij.dat', current_path + '/windturbines-ij.dat')
