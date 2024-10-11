@@ -12,6 +12,11 @@ import subprocess
 from rich.table import Table
 from rich.console import Console
 
+
+# ==================================================================
+# INPUTS
+# ==================================================================
+
 #shear = [-4, -2, 0, 2, 4]
 #veer  = [-4, -2, 0, 2, 4]
 
@@ -33,6 +38,10 @@ library_path  = "/home/x-smata/libraries/libinsdir"
 sounding_path = "/anvil/scratch/x-smata/postprocessing/results"
 
 batch_submit  = True
+
+# ==================================================================
+# MAIN LOGIC
+# ==================================================================
 
 # Determine if running on MacOS
 is_mac = platform.system() == "Darwin"
@@ -186,4 +195,9 @@ if GADrs:
 
 print("\n\n=========================")
 print("========= DONE. =========")
-print("=========================")
+print("=========================\n\n")
+
+
+# ==================================================================
+# END OF SCRIPT
+# ==================================================================
