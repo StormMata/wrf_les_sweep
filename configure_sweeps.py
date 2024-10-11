@@ -19,7 +19,7 @@ excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
 
 GAD   = True
 GAL   = True
-GADrs = True
+GADrs = False
 
 base_dir      = "./runs"
 wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
