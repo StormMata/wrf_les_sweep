@@ -10,7 +10,7 @@
 
 cd $SLURM_SUBMIT_DIR
 
-source "export_libs_load_modules"
+source "export_libs_load_modules.sh"
 
 MPIRUN=$(which mpirun)
 export OPENMPI_ROOT=$(dirname ${MPIRUN} | sed -e 's_/bin__g')
