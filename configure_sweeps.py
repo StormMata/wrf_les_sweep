@@ -6,6 +6,8 @@ import subprocess
 import shutil
 from rich.table import Table
 from rich.console import Console
+import platform
+import re
 
 shear = [-4, -2, 0, 2, 4]
 veer  = [-4, -2, 0, 2, 4]
@@ -19,12 +21,15 @@ GAD   = True
 GAL   = True
 GADrs = True
 
-base_dir      = "."
+base_dir      = "./runs"
 wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
 library_path  = "/home/x-smata/libraries/libinsdir"
 sounding_path = ""
 
 batch_submit  = True
+
+# Determine if running on MacOS
+is_mac = platform.system() == "Darwin"
 
 # Create all combinations
 combinations = list(itertools.product(shear, veer))
@@ -124,7 +129,17 @@ def create_directories(combinations, excluded_pairs, model):
 
         search_term = "lib_path"
 
-        subprocess.run(['sed', '-i', '', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/' + 'export_libs_load_modules.sh'], check=True)
+        # subprocess.run(['sed', '-i', '', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/' + 'export_libs_load_modules.sh'], check=True)
+
+        # Adjust sed command based on the OS
+        if is_mac:
+            sed_command = ['sed', '-i', '', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/export_libs_load_modules.sh']
+        else:
+            sed_command = ['sed', '-i', f's/{search_term}/{library_path.replace("/", "\\/")}/g', current_path + '/export_libs_load_modules.sh']
+
+        # Run the appropriate command
+        subprocess.run(sed_command, check=True)
+
 
         # Copy submit file
         shutil.copy2('./shell/submit_template.sh', current_path + '/' + 'submit.sh')
