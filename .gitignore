@@ -1,5 +1,6 @@
 # Directories
 runs/
+old_runs/
 
 # Prerequisites
 *.d
