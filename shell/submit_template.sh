@@ -3,7 +3,8 @@
 #SBATCH --ntasks=64
 #SBATCH --time=36:00:00
 #SBATCH -J job_name
-#SBATCH -A ees240114
+##SBATCH -A ees240114
+#SBATCH -A atm170028
 #SBATCH -p wholenode
 #SBATCH --mail-user=storm@mit.edu
 #SBATCH --mail-type=all
