@@ -279,11 +279,204 @@ for count, name in enumerate(casenames):
     ax[i,j].zaxis.set_tick_params(pad=-1)
     ax[i,j].set(xlabel=r'$x~[\textrm{m}]$', ylabel=r'$y~[\textrm{m}]$', zlabel=r'$z~[\textrm{m}]$')
     ax[i,j].set_title(casenames[count], fontsize=24, y=0.85)
-# fig.colorbar(cs, ax=[ax[0,0], ax[0,1], ax[0,2], ax[1,0], ax[1,1], ax[1,2]],
-#              ticks=np.linspace(vmin,vmax,6,endpoint=True),
-#              label=r'$\overline{u}/U_{\infty}~[-]$',
-#              aspect=75, pad=0.02, orientation='horizontal')
-# for c in cs.collections:
-#     c.set_edgecolor("face")
+
 plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/wrfles_uvel_slice_yz.png", bbox_inches="tight", dpi=600)
 plt.show()
+
+###########################################################################
+# spanwise velocity component
+ij = [[0,0], [0,1], [0,2], [1,0], [1,1], [1,2]]
+
+levels = 101; vmin_s = -0.08; vmax_s = 0.08; vmin_v = -0.4; vmax_v = 0.4
+###########################################################################
+# wrfles
+fig, ax = plt.subplots(nrows=2, ncols=3, figsize=(11,8), subplot_kw={"projection": "3d"}, constrained_layout=True)
+
+for count, name in enumerate(casenames):
+    if(count<3):
+        vmin = vmin_s; vmax = vmax_s
+    else:
+        vmin = vmin_v; vmax = vmax_v
+    i = ij[count][0]; j = ij[count][1]
+    ax[i,j].set_box_aspect(aspect=(40,8,8))
+    ax[i,j].contourf(np.mean(wrfles_data[count]['vx_0D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                        wrfles_data[count]['Y3'][ks:ke,js:je],
+                        wrfles_data[count]['Z3'][ks:ke,js:je],
+                        levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
+                        vmin=vmin, vmax=vmax, zdir='x', offset=0*wrfles_data[count]['diameter'])
+    ax[i,j].contourf(np.mean(wrfles_data[count]['vx_3D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                        wrfles_data[count]['Y3'][ks:ke,js:je],
+                        wrfles_data[count]['Z3'][ks:ke,js:je],
+                        levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
+                        vmin=vmin, vmax=vmax, zdir='x', offset=3*wrfles_data[count]['diameter'])
+    cs1 = ax[i,j].contourf(np.mean(wrfles_data[count]['vx_6D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                            wrfles_data[count]['Y3'][ks:ke,js:je],
+                            wrfles_data[count]['Z3'][ks:ke,js:je],
+                            levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
+                            vmin=vmin, vmax=vmax, zdir='x', offset=6*wrfles_data[count]['diameter'])
+    ax[i,j].contourf(np.mean(wrfles_data[count]['vx_9D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                        wrfles_data[count]['Y3'][ks:ke,js:je],
+                        wrfles_data[count]['Z3'][ks:ke,js:je],
+                        levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
+                        vmin=vmin, vmax=vmax, zdir='x', offset=9*wrfles_data[count]['diameter'])
+    ax[i,j].contourf(np.mean(wrfles_data[count]['vx_12D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                        wrfles_data[count]['Y3'][ks:ke,js:je],
+                        wrfles_data[count]['Z3'][ks:ke,js:je],
+                        levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
+                        vmin=vmin, vmax=vmax, zdir='x', offset=12*wrfles_data[count]['diameter'])
+    # cs2 = ax[i,j].contourf(np.mean(wrfles_data[
+    # ='x', offset=15*wrfles_data[count]['diameter'])
+    # Set the azimuth and elevation angles
+    ax[i,j].view_init(azim=225, elev=30, roll=0)
+    # ax[i,j].set_xlim3d([-100, 2000])
+    # ax[i,j].set_ylim3d([750.0, 1250.0])
+    # ax[i,j].set_zlim3d([178.0, 578.0])
+    ax[i,j].set_xticks(np.arange(0, 18*wrfles_data[count]['diameter'], 3*wrfles_data[count]['diameter']))
+    ax[i,j].set_xticklabels([r'$0D$', r'$3D$', r'$6D$', r'$9D$', r'$12D$', r'$15D$'], fontsize=14)
+    ax[i,j].tick_params(axis='x', labelrotation=-90)
+    ax[i,j].set_yticks(np.linspace(wrfles_data[count]['rotor_yloc'], wrfles_data[count]['rotor_yloc'], 1))
+    ax[i,j].set_yticklabels([r'$0D$'], fontsize=14)
+    ax[i,j].tick_params(axis='y', labelrotation=-30)
+    ax[i,j].set_zticks(np.linspace(wrfles_data[count]['hub_height'], wrfles_data[count]['hub_height'], 1))
+    ax[i,j].set_zticklabels([r'$0D$'], fontsize=14)
+    ax[i,j].tick_params(axis='z', labelrotation=-90)
+    ax[i,j].xaxis.labelpad=50
+    ax[i,j].yaxis.labelpad=-5
+    ax[i,j].zaxis.labelpad=-5
+    ax[i,j].yaxis.set_tick_params(pad=-5)
+    ax[i,j].zaxis.set_tick_params(pad=-1)
+    ax[i,j].set(xlabel=r'$x~[\textrm{m}]$', ylabel=r'$y~[\textrm{m}]$', zlabel=r'$z~[\textrm{m}]$')
+    ax[i,j].set_title(casenames[count], fontsize=24, y=0.85)
+    if(count==2):
+        fig.colorbar(cs1, ax=[ax[0,0], ax[0,1], ax[0,2]],
+                    ticks=np.linspace(vmin_s,vmax_s,5,endpoint=True),
+                    label=r'$\overline{v}/U_{\infty}~[-]$',
+                    aspect=75, pad=0.02, orientation='horizontal')
+    if(count==5):
+        fig.colorbar(cs2, ax=[ax[1,0], ax[1,1], ax[1,2]],
+                    ticks=np.linspace(vmin_v,vmax_v,5,endpoint=True),
+                    label=r'$\overline{v}/U_{\infty}~[-]$',
+                    aspect=75, pad=0.02, orientation='horizontal')
+plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/wrfles_vvel_slice_yz.png", bbox_inches="tight", dpi=600)
+plt.show()
+
+###########################################################################
+# calculate total wind speed in streamwise direction:
+###########################################################################
+ws_uytz_gal = np.sqrt(wrfles_data['uytz_gal']**2 + wrfles_data['vytz_gal']**2 + wrfles_data['wytz_gal']**2)
+ws_min = 0.0
+ws_max = 10.0
+# ws_max = wrfles_data['uinf_gal']
+
+# calculate dynamic pressure:
+p_dyn = 0.5*wrfles_data['rho']*ws_uytz_gal**2/1000.0 # in kPa
+
+# calculate pressure drop:
+delta_p = np.max(wrfles_data['pytz_gal']) - wrfles_data['pytz_gal'][int(wrfles_data['ix_rotor'])+3]
+
+# power
+rho = wrfles_data['rho']
+a = 1-(ws_uytz_gal[int(wrfles_data['ix_rotor'])]/wrfles_data['uinf_gal'])
+area = np.pi*wrfles_data['diameter']**2/4
+thrust = 2*rho*wrfles_data['uinf_gal']**2*a*(1-a)*area/1E3   # kN
+power = 2*rho*wrfles_data['uinf_gal']**3*a*(1-a)**2*area/1E3 # kW
+
+p_min = 98.940
+p_max = 98.980
+
+fig, ax = plt.subplots(nrows=2, ncols=1, figsize=(13.5, 4), sharex=True, constrained_layout = True)
+
+# velocity distribution in streamwise direction:
+ax[0].plot(xx, ws_uytz_gal, color='black', linestyle='solid', linewidth=3, zorder=10)
+ax[0].plot([xx[0], wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])],
+            [wrfles_data['uinf_gal'], wrfles_data['uinf_gal']],
+            color='blue', linestyle='dashed', linewidth=1.5)
+ax[0].plot([xx[0], wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])],
+            [ws_uytz_gal[int(wrfles_data['ix_rotor'])], ws_uytz_gal[int(wrfles_data['ix_rotor'])]],
+            color='red', linestyle='dashdot', linewidth=1.5)
+ax[0].plot([xx[0], wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])],
+            [np.min(ws_uytz_gal), np.min(ws_uytz_gal)],
+            color='blue', linestyle='dashed', linewidth=1.5)
+ax[0].plot([wrfles_data['rotor_xloc'],wrfles_data['rotor_xloc']], [ws_min,ws_max],
+            color='black', linestyle='dashed', linewidth=1.5)    
+ax[0].set_xlim([wrfles_data['rotor_xloc']-(3*wrfles_data['diameter']),
+                wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])])
+ax[0].set_xticks([wrfles_data['rotor_xloc']-(3*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc'],
+                    wrfles_data['rotor_xloc']+(5*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(10*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(15*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(20*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(25*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])])
+ax[0].set_ylim([ws_min,ws_max])
+ax[0].set_ylabel(r'$U~\textrm{[m~s$^{-1}$]}$', fontsize=fontsize)
+ax[0].tick_params(direction='in', length=6)
+ax[0].axes.xaxis.set_ticklabels([])
+
+# pressure distribution in streamwise direction:
+ax[1].plot(xx, wrfles_data['pytz_gal']/1000.0, color='black', linestyle='solid', linewidth=3, zorder=10)
+ax[1].plot([xx[0], wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])],
+            [np.max(wrfles_data['pytz_gal'])/1000.0, np.max(wrfles_data['pytz_gal'])/1000.0],
+            color='blue', linestyle='dashed', linewidth=1.5)
+ax[1].plot([xx[0], wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])],
+            [wrfles_data['pytz_gal'][0]/1000.0,wrfles_data['pytz_gal'][0]/1000.0],
+            color='red', linestyle='dashdot', linewidth=1.5)
+ax[1].plot([xx[0], wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])],
+            [wrfles_data['pytz_gal'][int(wrfles_data['ix_rotor'])+3]/1000.0,
+            wrfles_data['pytz_gal'][int(wrfles_data['ix_rotor'])+3]/1000.0],
+            color='blue', linestyle='dashed', linewidth=1.5)
+ax[1].plot([wrfles_data['rotor_xloc'],wrfles_data['rotor_xloc']], [p_min,p_max],
+            color='black', linestyle='dashed', linewidth=1.5)    
+ax[1].set_xlim([wrfles_data['rotor_xloc']-(3*wrfles_data['diameter']),
+                wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])])
+ax[1].set_xticks([wrfles_data['rotor_xloc']-(3*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc'],
+                    wrfles_data['rotor_xloc']+(5*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(10*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(15*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(20*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(25*wrfles_data['diameter']),
+                    wrfles_data['rotor_xloc']+(30*wrfles_data['diameter'])])
+ax[1].set_ylim([p_min,p_max])
+ax[1].set_xlabel(r'$x/D~[-]$', fontsize=fontsize) 
+ax[1].set_ylabel(r'$P_{tot}~\textrm{[kPa]}$', fontsize=fontsize)
+ax[1].tick_params(direction='in', length=6)
+ax[1].axes.xaxis.set_ticklabels([r'$-3$', r'$x_{rotor}$', r'$5$', r'$10$', r'$15$', r'$20$', r'$25$', r'$30$'], fontsize=fontsize)
+
+plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/wrfles_vel_pres_dist.png", bbox_inches="tight", dpi=600)
+plt.show()
+
+###########################################################################
+
+###########################################################################
+
+vmin = 0.6
+vmax = 1.0
+for i in range(0,len(wrfles_data['ux_0D_gal'])):
+    print(i,'/',wrfles_data['ux_0D_gal'].shape[0]-1)
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(5.2, 5), constrained_layout = True)
+    # y-z contour plot for wind speed
+    cs0 = ax.pcolormesh(wrfles_data['Y3'], wrfles_data['Z3'], wrfles_data['ux_0D_gal'][i,:,:]/wrfles_data['uinf_gal'],
+                        vmin=vmin, vmax=vmax, alpha=1, cmap='Spectral_r', shading='gouraud', rasterized=True)
+    ax.plot(wrfles_data['bpy_gal'][i,:,0], wrfles_data['bpz_gal'][i,:,0], color='black', marker='o',
+            markerfacecolor='black', markersize=1, linestyle='solid', linewidth=3)
+    ax.plot(wrfles_data['bpy_gal'][i,:,1], wrfles_data['bpz_gal'][i,:,1], color='red', marker='o',
+            markerfacecolor='black', markersize=1, linestyle='solid', linewidth=3)
+    ax.plot(wrfles_data['bpy_gal'][i,:,2], wrfles_data['bpz_gal'][i,:,2], color='limegreen', marker='o',
+            markerfacecolor='black', markersize=1, linestyle='solid', linewidth=3)
+    # ax.set_xlim([300, 462])
+    # ax.set_ylim([300, 460])
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.axes.xaxis.set_ticklabels([])
+    ax.axes.yaxis.set_ticklabels([])
+    ax.invert_xaxis()
+
+    plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/u_00"+str(i)+".tif",bbox_inches="tight",dpi=100)
+
+    plt.show()
+    plt.close()
+
+grid2gif('/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/rotorPlane/*.tif',
+         '/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/uvel.gif')
