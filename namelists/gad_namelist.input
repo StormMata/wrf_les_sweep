@@ -33,7 +33,7 @@
  time_step_fract_den                 = 25,
  max_dom                             = 2,
  s_we                                = 1,     1,     1,
- e_we                                = 251,   621,   751,
+ e_we                                = 251,   411,   751,
  s_sn                                = 1,     1,     1,
  e_sn                                = 101,   191,   191,
  s_vert                              = 1,     1,     1,

@@ -1,7 +1,7 @@
 17       "Length of the blade element vector [-]"
 8        "Number of airfoils [-]"
 3        "Number of blades [-]"
-90.00    "Hub height [m]"
+378.00    "Hub height [m]"
 5.00     "Tower diameter [m]"
 126.00   "Rotor diameter [m]"
 3.00     "Hub diameter [m]"
@@ -18,7 +18,7 @@
 2.00     "blade_c_eps_3 [-], z or radial-wise"
 2.00     "nacelle_c_eps [-]"
 2.00     "tower_c_eps [-]"
-126.00   "Inflow location [m]"
+378.00   "Inflow location [m]"
 0.5      "Yaw rate [deg/s]"
 1000.00  "Yaw error threshold [(deg)^2*(seconds)]
  2.8667	 3.542	1.000  13.308  "Cylinder1"  1  "r [m]" "Chord [m]" "Thickness [% of chord]" "Twist angle (gamma) [deg]" "Airfoil name [-]" "Airfoil ID [-]"
