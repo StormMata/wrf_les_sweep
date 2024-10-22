@@ -1,6 +1,7 @@
 # Directories
 runs/
 old_runs/
+presentation_runs/
 
 # Prerequisites
 *.d

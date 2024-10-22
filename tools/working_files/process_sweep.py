@@ -384,12 +384,12 @@ for case in casename:
     pxy_8D  = p_8D[:,:,lon_dist_0D]  + ( p_8D[:,:,lon_dist_0D+1]  - p_8D[:,:,lon_dist_0D]  )*(dist_lon_0D - lon_dist_0D*dy)/dy
     pxy_10D = p_10D[:,:,lon_dist_0D] + ( p_10D[:,:,lon_dist_0D+1] - p_10D[:,:,lon_dist_0D] )*(dist_lon_0D - lon_dist_0D*dy)/dy
 
-    pxyt_0D  = np.mean(pxy_0D,axis=0)/uinf**2
-    pxyt_2D  = np.mean(pxy_2D,axis=0)/uinf**2
-    pxyt_4D  = np.mean(pxy_4D,axis=0)/uinf**2
-    pxyt_6D  = np.mean(pxy_6D,axis=0)/uinf**2
-    pxyt_8D  = np.mean(pxy_8D,axis=0)/uinf**2
-    pxyt_10D = np.mean(pxy_10D,axis=0)/uinf**2
+    pxyt_0D  = np.mean(pxy_0D,axis=0)
+    pxyt_2D  = np.mean(pxy_2D,axis=0)
+    pxyt_4D  = np.mean(pxy_4D,axis=0)
+    pxyt_6D  = np.mean(pxy_6D,axis=0)
+    pxyt_8D  = np.mean(pxy_8D,axis=0)
+    pxyt_10D = np.mean(pxy_10D,axis=0)
 
     pxz_0D  = pz[:,:,lat_dist_0D]  + ( pz[:,:,lat_dist_0D+1]  - pz[:,:,lat_dist_0D]  )*( hub_height-z_av[kbot] )/( z_av[ktop] - z_av[kbot] )
     pxz_2D  = pz[:,:,lat_dist_2D]  + ( pz[:,:,lat_dist_2D+1]  - pz[:,:,lat_dist_2D]  )*( hub_height-z_av[kbot] )/( z_av[ktop] - z_av[kbot] )
@@ -398,12 +398,12 @@ for case in casename:
     pxz_8D  = pz[:,:,lat_dist_8D]  + ( pz[:,:,lat_dist_8D+1]  - pz[:,:,lat_dist_8D]  )*( hub_height-z_av[kbot] )/( z_av[ktop] - z_av[kbot] )
     pxz_10D = pz[:,:,lat_dist_10D] + ( pz[:,:,lat_dist_10D+1] - pz[:,:,lat_dist_10D] )*( hub_height-z_av[kbot] )/( z_av[ktop] - z_av[kbot] )
 
-    pxzt_0D  = np.mean(pxz_0D,axis=0)/uinf**2
-    pxzt_2D  = np.mean(pxz_2D,axis=0)/uinf**2
-    pxzt_4D  = np.mean(pxz_4D,axis=0)/uinf**2
-    pxzt_6D  = np.mean(pxz_6D,axis=0)/uinf**2
-    pxzt_8D  = np.mean(pxz_8D,axis=0)/uinf**2
-    pxzt_10D = np.mean(pxz_10D,axis=0)/uinf**2
+    pxzt_0D  = np.mean(pxz_0D,axis=0)
+    pxzt_2D  = np.mean(pxz_2D,axis=0)
+    pxzt_4D  = np.mean(pxz_4D,axis=0)
+    pxzt_6D  = np.mean(pxz_6D,axis=0)
+    pxzt_8D  = np.mean(pxz_8D,axis=0)
+    pxzt_10D = np.mean(pxz_10D,axis=0)
 
     ###########################################################################
     # turbulence statistics
@@ -568,6 +568,13 @@ for case in casename:
     var_holder['vxyt_8D']  = vxyt_8D
     var_holder['vxyt_10D'] = vxyt_10D
 
+    var_holder['pxyt_0D']  = pxyt_0D
+    var_holder['pxyt_2D']  = pxyt_2D
+    var_holder['pxyt_4D']  = pxyt_4D
+    var_holder['pxyt_6D']  = pxyt_6D
+    var_holder['pxyt_8D']  = pxyt_8D
+    var_holder['pxyt_10D'] = pxyt_10D
+
     var_holder['uxzt_0D']  = uxzt_0D
     var_holder['uxzt_2D']  = uxzt_2D
     var_holder['uxzt_4D']  = uxzt_4D
@@ -581,6 +588,13 @@ for case in casename:
     var_holder['vxzt_6D']  = vxzt_6D
     var_holder['vxzt_8D']  = vxzt_8D
     var_holder['vxzt_10D'] = vxzt_10D
+
+    var_holder['pxzt_0D']  = pxzt_0D
+    var_holder['pxzt_2D']  = pxzt_2D
+    var_holder['pxzt_4D']  = pxzt_4D
+    var_holder['pxzt_6D']  = pxzt_6D
+    var_holder['pxzt_8D']  = pxzt_8D
+    var_holder['pxzt_10D'] = pxzt_10D
 
     # var_holder['uupxyt_0D'] = uupxyt_0D
     # var_holder['uupxyt_2D'] = uupxyt_2D
