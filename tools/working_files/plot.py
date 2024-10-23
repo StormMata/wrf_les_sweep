@@ -33,7 +33,7 @@ def grid2gif(image_str,output_gif):
 
 # casenames = [r's0_v0']
 
-casenames = [r's0_v2_5MW']
+casenames = [r's0_v0', r's0_v2']
 
 disk_avg = True
 contours = True
@@ -41,7 +41,7 @@ profiles = True
 itqp     = True
 ###########################################################################
 # load wrf data
-print('Loading data')
+print('Loading data...')
 
 wrfles_data = []
 for count, name in enumerate(casenames):
@@ -135,7 +135,8 @@ if disk_avg:
                         color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[0,0].set_xlim([0,1])
         # ax[0,0].set_ylim([0,60])
-        ax[0,0].set_xticks(np.arange(0,1.2,0.2)); ax[0,0].set_yticks(np.arange(0,80,20))
+        ax[0,0].set_xticks(np.arange(0,1.2,0.2));
+        # ax[0,0].set_yticks(np.arange(0,80,20))
         ax[0,0].axes.xaxis.set_ticklabels([])
         ax[0,0].set_ylabel(r'$\overline{\alpha}~[^{\circ}]$')
         ax[0,0].legend(loc="upper right", fancybox=True, shadow=False, ncol=3, fontsize=8)
@@ -145,7 +146,8 @@ if disk_avg:
                         color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[0,1].set_xlim([0,1])
         # ax[0,1].set_ylim([0.1,0.4])
-        ax[0,1].set_xticks(np.arange(0,1.2,0.2)); ax[0,1].set_yticks(np.arange(0.1,0.5,0.1))
+        ax[0,1].set_xticks(np.arange(0,1.2,0.2));
+        # ax[0,1].set_yticks(np.arange(0.1,0.5,0.1))
         ax[0,1].axes.xaxis.set_ticklabels([])
         ax[0,1].set_ylabel(r'$\overline{a}=1-\frac{\overline{u}_{m}}{U_{\infty}}~[-]$')
 
@@ -154,7 +156,8 @@ if disk_avg:
                         color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[1,0].set_xlim([0,1])
         # ax[1,0].set_ylim([0,0.01])
-        ax[1,0].set_xticks(np.arange(0,1.2,0.2)); ax[1,0].set_yticks(np.arange(0,0.0125,0.005))
+        ax[1,0].set_xticks(np.arange(0,1.2,0.2));
+        # ax[1,0].set_yticks(np.arange(0,0.0125,0.005))
         ax[1,0].set_ylabel(r'$\overline{F}^{*}_{D}~[-]$'); ax[1,0].set_xlabel(r'$r/R~[-]$')
 
     for count, name in enumerate(casenames):
@@ -162,7 +165,8 @@ if disk_avg:
                         color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[1,1].set_xlim([0,1])
         # ax[1,1].set_ylim([-0.025,0.6])
-        ax[1,1].set_xticks(np.arange(0,1.2,0.2)); ax[1,1].set_yticks(np.arange(0.0,0.8,0.2))
+        ax[1,1].set_xticks(np.arange(0,1.2,0.2));
+        # ax[1,1].set_yticks(np.arange(0.0,0.8,0.2))
         ax[1,1].set_ylabel(r'$\overline{F}^{*}_{L}~[-]$'); ax[1,1].set_xlabel(r'$r/R~[-]$')
 
     plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/disk_averaged_quantities.png", bbox_inches="tight", dpi=600)    
@@ -193,7 +197,7 @@ if profiles:
 
     # 1D
     # for count, name in enumerate(casenames):
-        ax[1].plot(wrfles_data[count]['uxyt_1D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[1].plot(wrfles_data[count]['uxyt_2D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[1].set_xlim([0.0,1.5])
         ax[1].set_ylim([-1.0,1.0])
@@ -202,11 +206,11 @@ if profiles:
         ax[1].grid(True, 'major', alpha=0.2)
         ax[1].axes.yaxis.set_ticklabels([])
         ax[1].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize)  
-        ax[1].set_title(r'$x/D=1$')
+        ax[1].set_title(r'$x/D=2$')
 
     # 3D
     # for count, name in enumerate(casenames):
-        ax[2].plot(wrfles_data[count]['uxyt_3D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[2].plot(wrfles_data[count]['uxyt_4D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[2].set_xlim([0.0,1.5])
         ax[2].set_ylim([-1.0,1.0])
@@ -215,7 +219,7 @@ if profiles:
         ax[2].grid(True, 'major', alpha=0.2)
         ax[2].axes.yaxis.set_ticklabels([])
         ax[2].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize)   
-        ax[2].set_title(r'$x/D=3$')
+        ax[2].set_title(r'$x/D=4$')
 
     # 6D
     # for count, name in enumerate(casenames):
@@ -232,7 +236,7 @@ if profiles:
 
     # 9D
     # for count, name in enumerate(casenames):
-        ax[4].plot(wrfles_data[count]['uxyt_9D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[4].plot(wrfles_data[count]['uxyt_8D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[4].set_xlim([0.0,1.5])
         ax[4].set_ylim([-1.0,1.0])
@@ -241,11 +245,11 @@ if profiles:
         ax[4].grid(True, 'major', alpha=0.2)
         ax[4].axes.yaxis.set_ticklabels([])
         ax[4].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
-        ax[4].set_title(r'$x/D=9$')
+        ax[4].set_title(r'$x/D=8$')
 
     # 12D
     # for count, name in enumerate(casenames):
-        ax[5].plot(wrfles_data[count]['uxyt_12D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[5].plot(wrfles_data[count]['uxyt_10D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[5].set_xlim([0.0,1.5])
         ax[5].set_ylim([-1.0,1.0])
@@ -254,7 +258,7 @@ if profiles:
         ax[5].grid(True, 'major', alpha=0.2)
         ax[5].axes.yaxis.set_ticklabels([])
         ax[5].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
-        ax[5].set_title(r'$x/D=12$')
+        ax[5].set_title(r'$x/D=10$')
 
     plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/u_profiles.png", bbox_inches="tight", dpi=600)  
 
@@ -278,7 +282,7 @@ if profiles:
 
     # 1D
     # for count, name in enumerate(casenames):
-        ax[1].plot(wrfles_data[count]['vxyt_1D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[1].plot(wrfles_data[count]['vxyt_2D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[1].set_xlim(xlims)
         ax[1].set_ylim([-1.0,1.0])
@@ -287,11 +291,11 @@ if profiles:
         ax[1].grid(True, 'major', alpha=0.2)
         ax[1].axes.yaxis.set_ticklabels([])
         ax[1].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize)  
-        ax[1].set_title(r'$x/D=1$')
+        ax[1].set_title(r'$x/D=2$')
 
     # 3D
     # for count, name in enumerate(casenames):
-        ax[2].plot(wrfles_data[count]['vxyt_3D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[2].plot(wrfles_data[count]['vxyt_4D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[2].set_xlim(xlims)
         ax[2].set_ylim([-1.0,1.0])
@@ -300,7 +304,7 @@ if profiles:
         ax[2].grid(True, 'major', alpha=0.2)
         ax[2].axes.yaxis.set_ticklabels([])
         ax[2].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize)   
-        ax[2].set_title(r'$x/D=3$')
+        ax[2].set_title(r'$x/D=4$')
 
     # 6D
     # for count, name in enumerate(casenames):
@@ -317,7 +321,7 @@ if profiles:
 
     # 9D
     # for count, name in enumerate(casenames):
-        ax[4].plot(wrfles_data[count]['vxyt_9D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[4].plot(wrfles_data[count]['vxyt_8D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[4].set_xlim(xlims)
         ax[4].set_ylim([-1.0,1.0])
@@ -326,11 +330,11 @@ if profiles:
         ax[4].grid(True, 'major', alpha=0.2)
         ax[4].axes.yaxis.set_ticklabels([])
         ax[4].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
-        ax[4].set_title(r'$x/D=9$')
+        ax[4].set_title(r'$x/D=8$')
 
     # 12D
     # for count, name in enumerate(casenames):
-        ax[5].plot(wrfles_data[count]['vxyt_12D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
+        ax[5].plot(wrfles_data[count]['vxyt_10D'],(wrfles_data[count]['z_av']-wrfles_data[count]['hub_height'])/wrfles_data[count]['diameter'],
                     color=colors[count],linestyle='solid',linewidth=2,label=name)
         ax[5].set_xlim(xlims)
         ax[5].set_ylim([-1.0,1.0])
@@ -339,7 +343,7 @@ if profiles:
         ax[5].grid(True, 'major', alpha=0.2)
         ax[5].axes.yaxis.set_ticklabels([])
         ax[5].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
-        ax[5].set_title(r'$x/D=12$')
+        ax[5].set_title(r'$x/D=10$')
 
     plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/v_profiles.png", bbox_inches="tight", dpi=600)  
 
@@ -445,7 +449,7 @@ if contours:
     je = 140
 
     levels = 255
-    vmin = 0.3
+    vmin = 0.5
     vmax = 1.0
 
     for count, name in enumerate(casenames):
@@ -458,29 +462,35 @@ if contours:
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
                             vmin=vmin, vmax=vmax, zdir='x', offset=0*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['ux_3D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+        ax.contourf(np.mean(wrfles_data[count]['ux_2D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
-                            vmin=vmin, vmax=vmax, zdir='x', offset=3*wrfles_data[count]['diameter'])
+                            vmin=vmin, vmax=vmax, zdir='x', offset=2*wrfles_data[count]['diameter'])
+        ax.contourf(np.mean(wrfles_data[count]['ux_4D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                            wrfles_data[count]['Y3'][ks:ke,js:je],
+                            wrfles_data[count]['Z3'][ks:ke,js:je],
+                            levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
+                            vmin=vmin, vmax=vmax, zdir='x', offset=4*wrfles_data[count]['diameter'])
         ax.contourf(np.mean(wrfles_data[count]['ux_6D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
                             vmin=vmin, vmax=vmax, zdir='x', offset=6*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['ux_9D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+        ax.contourf(np.mean(wrfles_data[count]['ux_8D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
-                            vmin=vmin, vmax=vmax, zdir='x', offset=9*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['ux_12D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+                            vmin=vmin, vmax=vmax, zdir='x', offset=8*wrfles_data[count]['diameter'])
+        ax.contourf(np.mean(wrfles_data[count]['ux_10D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
-                            vmin=vmin, vmax=vmax, zdir='x', offset=12*wrfles_data[count]['diameter'])
+                            vmin=vmin, vmax=vmax, zdir='x', offset=10*wrfles_data[count]['diameter'])
         ax.view_init(azim=225, elev=30, roll=0)
-        ax.set_xticks(np.arange(0, 15*wrfles_data[count]['diameter'], 3*wrfles_data[count]['diameter']))
-        ax.set_xticklabels([r'$0D$', r'$3D$', r'$6D$', r'$9D$', r'$12D$'], fontsize=14)
+        print(f"diameter: {wrfles_data[count]['diameter']}")
+        ax.set_xticks(np.arange(0, 12*wrfles_data[count]['diameter'], 2*wrfles_data[count]['diameter']))
+        ax.set_xticklabels([r'$0D$', r'$2D$', r'$4D$', r'$8D$', r'$8D$', r'$10D$'], fontsize=14)
         ax.tick_params(axis='x', labelrotation=-90)
         ax.set_yticks(np.linspace(wrfles_data[count]['rotor_yloc'], wrfles_data[count]['rotor_yloc'], 1))
         ax.set_yticklabels([r'$0D$'], fontsize=14)
@@ -493,10 +503,17 @@ if contours:
         ax.zaxis.labelpad=-5
         ax.yaxis.set_tick_params(pad=-5)
         ax.zaxis.set_tick_params(pad=-1)
-        ax.set(xlabel=r'$x~[\textrm{m}]$', ylabel=r'$y~[\textrm{m}]$', zlabel=r'$z~[\textrm{m}]$')
+        ax.set(xlabel=r'$x$', ylabel=r'$y$', zlabel=r'$z$')
         ax.set_title(casenames[count], fontsize=24, y=0.85)
-        cbar = fig.colorbar(cs, ax=ax, orientation='horizontal', pad=0.1, shrink=0.5)
-        cbar.set_label('$\overline{u}/U_{\infty}$ [-]', fontsize=16)
+        # Generate colorbar with adjusted settings
+        cbar = fig.colorbar(cs, ax=ax, orientation='horizontal', pad=0.2, shrink=0.7)
+
+        # Reduce the number of colorbar ticks to avoid overlap
+        cbar.set_ticks(np.linspace(vmin, vmax, 6))  # Adjust the number of ticks to avoid crowding
+
+        # Adjust tick label size and padding
+        cbar.ax.tick_params(labelsize=10)  # Adjust tick label font size
+        cbar.set_label('$\\overline{u}/U_{\\infty}$ [-]', fontsize=12, labelpad=15)  # Increase label padding
 
         plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/{name}_uvel_yz.png", bbox_inches="tight", dpi=800)
         plt.close()
@@ -521,22 +538,22 @@ if contours:
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
                             vmin=vmin, vmax=vmax, zdir='x', offset=0*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['vx_3D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+        ax.contourf(np.mean(wrfles_data[count]['vx_2D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
                             vmin=vmin, vmax=vmax, zdir='x', offset=3*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['vx_6D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+        ax.contourf(np.mean(wrfles_data[count]['vx_4D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
                             vmin=vmin, vmax=vmax, zdir='x', offset=6*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['vx_9D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+        ax.contourf(np.mean(wrfles_data[count]['vx_8D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
                             vmin=vmin, vmax=vmax, zdir='x', offset=9*wrfles_data[count]['diameter'])
-        ax.contourf(np.mean(wrfles_data[count]['vx_12D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
+        ax.contourf(np.mean(wrfles_data[count]['vx_10D'],axis=0)[ks:ke,js:je]/wrfles_data[count]['uinf'],
                             wrfles_data[count]['Y3'][ks:ke,js:je],
                             wrfles_data[count]['Z3'][ks:ke,js:je],
                             levels=np.linspace(vmin, vmax, levels, endpoint=True), extend='both',
@@ -599,10 +616,10 @@ if itqp:
         wrfles_rel_diff_torque = []
         wrfles_rel_diff_ind    = []
 
-        wrfles_rel_diff_power.append(mean_relative_error(wrfles_data[count]['power_aero'],wrfles_data[6]['power_aero']).round(1))
-        wrfles_rel_diff_thrust.append(mean_relative_error(wrfles_data[count]['thrust'],wrfles_data[6]['thrust']).round(1))
-        wrfles_rel_diff_torque.append(mean_relative_error(wrfles_data[count]['torque_aero'],wrfles_data[6]['torque_aero']).round(1))
-        wrfles_rel_diff_ind.append(mean_relative_error((1.0-wrfles_data[count]['v1m_star']),(1.0-wrfles_data[6]['v1m_star'])).round(1))
+        wrfles_rel_diff_power.append(mean_relative_error(wrfles_data[count]['power_aero'],wrfles_data[0]['power_aero']).round(1))
+        wrfles_rel_diff_thrust.append(mean_relative_error(wrfles_data[count]['thrust'],wrfles_data[0]['thrust']).round(1))
+        wrfles_rel_diff_torque.append(mean_relative_error(wrfles_data[count]['torque_aero'],wrfles_data[0]['torque_aero']).round(1))
+        wrfles_rel_diff_ind.append(mean_relative_error((1.0-wrfles_data[count]['v1m_star']),(1.0-wrfles_data[0]['v1m_star'])).round(1))
 
         # induction
         ax[0].bar(ind[count], wrfles_rel_diff_ind, color=colors[count], edgecolor='black', alpha=alpha)

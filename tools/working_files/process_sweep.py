@@ -20,21 +20,25 @@ np.seterr(divide='ignore',invalid='ignore')
 save_data = True
 
 save_period = 10.0 # in seconds
-remove_data = 7.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
+remove_data = 0.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
 
-casename = [r's0_v4', r'sn2_v2', r's0_v2', r's2_v2', r'sn4_v0', r'sn2_v0', r's0_v0', r's2_v0', r's4_v0', r'sn2_vn2', r's0_vn2', r's2_vn2', r's0_vn4']
+# casename = [r's0_v4', r'sn2_v2', r's0_v2', r's2_v2', r'sn4_v0', r'sn2_v0', r's0_v0', r's2_v0', r's4_v0', r'sn2_vn2', r's0_vn2', r's2_vn2', r's0_vn4']
 
-# case = f's0_v0'
+casename = [r's0_v0', r's0_v2']
 
 for case in casename:
 
-    file2read = netCDF4.Dataset(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/{case}/wrfout_d02_0001-01-01_00_00_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
+    print(f'Loading data for {case}...')
+
+    file2read = netCDF4.Dataset(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/{case}/wrfout_d02_0001-01-01_00_15_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
     file2read.variables.keys()
 
     timeidx = wrf.extract_times(file2read, timeidx=wrf.ALL_TIMES, meta=False)
     times={}
     for i in range(0,len(timeidx)):
         times[i] = pd.to_datetime(str(timeidx[i])).strftime('%Y-%m-%d %H:%M:%S')
+
+    print(f'Calculating variables for {case}...')
 
     # Field variables
     dx = file2read.getncattr('DX')
@@ -55,7 +59,10 @@ for case in casename:
     Te = Nt
     Nt = Te - Ts
 
-    diameter   = 178.0
+    print(f'Ts: {Ts}')
+    print(f'Te: {Te}')
+
+    diameter   = 199.0
     hub_height = 378
     Ntrb       = 1
     Nsct       = 45
@@ -140,7 +147,7 @@ for case in casename:
     smearingDist = 3
 
     ## tower and rotor apex locations:
-    tower_xloc = 356.0                                # Tower x-position in meters
+    tower_xloc = 597.0                                # Tower x-position in meters
     tower_yloc = 382.0                                # Tower y-position in meters
 
     # tower
@@ -456,7 +463,7 @@ for case in casename:
     lm = np.mean(l,axis=(0,2))
     dm = np.mean(d,axis=(0,2))
 
-    rhub = 5.6/2
+    rhub = 4.8/2
     dist = 0.0
     dr = np.zeros(Nelm)
     for i in range(0,Nelm):
@@ -636,5 +643,5 @@ for case in casename:
     # Save low-frequency output variables into .npz file
         # print('##### saving data #####')
     np.savez( os.path.join(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/{case}.npz'),**var_holder)
-    print(f'done with {case}')
+    print(f'Done with {case}.\n')
     del var_holder

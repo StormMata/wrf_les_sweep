@@ -17,19 +17,21 @@ from rich.console import Console
 # INPUTS
 # ==================================================================
 
-shear = [-4, -2, 0, 2, 4]
-veer  = [-4, -2, 0, 2, 4]
+# shear = [-4, -2, 0, 2, 4]
+# veer  = [-4, -2, 0, 2, 4]
 
-#shear = [0]
-#veer  = [0]
+shear = [0, 2]
+veer  = [0, 2]
 
-excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
-                  (-4, 2),  (4, 2),
-                  (-4, -2), (4, -2),
-                  (-4, -4), (-2, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
+# excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
+#                   (-4, 2),  (4, 2),
+#                   (-4, -2), (4, -2),
+#                   (-4, -4), (-2, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
+
+excluded_pairs = [(0, 2), (2, 0)]
 
 GAD   = True
-GAL   = True
+GAL   = False
 GADrs = False
 
 base_dir      = "/anvil/scratch/x-smata/wrf_les_sweep/runs"
