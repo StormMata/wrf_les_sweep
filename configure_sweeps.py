@@ -38,6 +38,8 @@ base_dir      = "/anvil/scratch/x-smata/wrf_les_sweep/runs"
 wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
 library_path  = "/home/x-smata/libraries/libinsdir"
 sounding_path = "/anvil/scratch/x-smata/postprocessing/results"
+tools_path    = "/anvil/scratch/x-smata/wrf_les_sweep/tools"
+turbine       = 'iea10MW'
 
 batch_submit  = True
 
@@ -170,6 +172,11 @@ def create_directories(combinations, excluded_pairs, model):
 
         # TASK: grant permissions to submit shell scripts
         os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+
+        # TASK: Copy post-processing files
+        text_file_path = current_path + '/windTurbines' + turbine + 'turbineProperties.tbl'
+
+        print(f'path: {text_file_path}')
 
         case_num += 1
 
