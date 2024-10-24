@@ -89,7 +89,7 @@ def create_directories(combinations, excluded_pairs, model):
 
     os.makedirs(base_dir + '/' + model, exist_ok=True)
 
-    os.makedirs(base_dir + '/' + model + 'figs', exist_ok=True)
+    os.makedirs(base_dir + '/' + model + '/figs', exist_ok=True)
 
     # Get model string
     model_str = model.split('_')[0].lower()
