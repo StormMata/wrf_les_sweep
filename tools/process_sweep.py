@@ -54,7 +54,7 @@ for case in casename:
 
     print(f'Loading data for {case}...')
 
-    file2read = netCDF4.Dataset(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/{case}/wrfout_d02_0001-01-01_00_15_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
+    file2read = netCDF4.Dataset(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/{case}/wrfout_d02_0001-01-01_00_15_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
     file2read.variables.keys()
 
     timeidx = wrf.extract_times(file2read, timeidx=wrf.ALL_TIMES, meta=False)
@@ -652,6 +652,6 @@ for case in casename:
 
     # Save low-frequency output variables into .npz file
         # print('##### saving data #####')
-    np.savez( os.path.join(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/{case}.npz'),**var_holder)
+    np.savez( os.path.join(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/{case}.npz'),**var_holder)
     print(f'Done with {case}.\n')
     del var_holder

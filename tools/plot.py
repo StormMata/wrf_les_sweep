@@ -45,7 +45,7 @@ print('Loading data...')
 
 wrfles_data = []
 for count, name in enumerate(casenames):
-    wrfles_data.append(dict(np.load('/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/' + casenames[count]+'.npz')))
+    wrfles_data.append(dict(np.load('/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/' + casenames[count]+'.npz')))
 
 ###########################################################################
 # set figure layout parameters
@@ -169,7 +169,7 @@ if disk_avg:
         # ax[1,1].set_yticks(np.arange(0.0,0.8,0.2))
         ax[1,1].set_ylabel(r'$\overline{F}^{*}_{L}~[-]$'); ax[1,1].set_xlabel(r'$r/R~[-]$')
 
-    plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/disk_averaged_quantities.png", bbox_inches="tight", dpi=600)    
+    plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/disk_averaged_quantities.png", bbox_inches="tight", dpi=600)    
 
 ###########################################################################
 # y-z wind speed profile comparison
@@ -260,7 +260,7 @@ if profiles:
         ax[5].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
         ax[5].set_title(r'$x/D=10$')
 
-    plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/u_profiles.png", bbox_inches="tight", dpi=600)  
+    plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/u_profiles.png", bbox_inches="tight", dpi=600)  
 
 
     fig, ax = plt.subplots(nrows=1, ncols=6, figsize=(16, 6), constrained_layout=True)
@@ -345,7 +345,7 @@ if profiles:
         ax[5].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
         ax[5].set_title(r'$x/D=10$')
 
-    plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/v_profiles.png", bbox_inches="tight", dpi=600)  
+    plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/v_profiles.png", bbox_inches="tight", dpi=600)  
 
 # # ###########################################################################
 # # # y-z wind speed profile comparison
@@ -432,7 +432,7 @@ if profiles:
 # # ax[5].set_xlabel(r'$\overline{u}/U_{\infty}~[-]$',fontsize=fontsize) 
 # # ax[5].set_title(r'$x/D=12$')
 
-# # plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/px_z.png", bbox_inches="tight", dpi=600) 
+# # plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/px_z.png", bbox_inches="tight", dpi=600) 
 
 ###########################################################################
     # streamwise velocity component
@@ -515,7 +515,7 @@ if contours:
         cbar.ax.tick_params(labelsize=10)  # Adjust tick label font size
         cbar.set_label('$\\overline{u}/U_{\\infty}$ [-]', fontsize=12, labelpad=15)  # Increase label padding
 
-        plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/{name}_uvel_yz.png", bbox_inches="tight", dpi=800)
+        plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/{name}_uvel_yz.png", bbox_inches="tight", dpi=800)
         plt.close()
 
 ###########################################################################
@@ -576,7 +576,7 @@ if contours:
         ax.set(xlabel=r'$x~[\textrm{m}]$', ylabel=r'$y~[\textrm{m}]$', zlabel=r'$z~[\textrm{m}]$')
         ax.set_title(casenames[count], fontsize=24, y=0.85)
 
-        plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/{name}_vvel_yz.png", bbox_inches="tight", dpi=800)
+        plt.savefig(f"/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/{name}_vvel_yz.png", bbox_inches="tight", dpi=800)
         plt.close()
 
 ###########################################################################
@@ -639,7 +639,7 @@ if itqp:
         ax[3].set_xticklabels(casenames)
         ax[3].set_ylabel(r'$\mathrm{\mathbb{E}}_{\overline{P}}~[\%]$', fontsize=fontsize)
 
-    plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/rel_err_ind_thrust_torque_power.png", bbox_inches="tight", dpi=800)
+    plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/rel_err_ind_thrust_torque_power.png", bbox_inches="tight", dpi=800)
     plt.show()
 
 # # ###########################################################################
@@ -726,7 +726,7 @@ if itqp:
 # # ax[1].tick_params(direction='in', length=6)
 # # ax[1].axes.xaxis.set_ticklabels([r'$-3$', r'$x_{rotor}$', r'$5$', r'$10$', r'$15$', r'$20$', r'$25$', r'$30$'], fontsize=fontsize)
 
-# # plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/wrfles_vel_pres_dist.png", bbox_inches="tight", dpi=600)
+# # plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/wrfles_vel_pres_dist.png", bbox_inches="tight", dpi=600)
 # # plt.show()
 
 # # ###########################################################################
@@ -755,12 +755,12 @@ if itqp:
 # #     ax.axes.yaxis.set_ticklabels([])
 # #     ax.invert_xaxis()
 
-# #     plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/u_00"+str(i)+".tif",bbox_inches="tight",dpi=100)
+# #     plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/u_00"+str(i)+".tif",bbox_inches="tight",dpi=100)
 
 # #     plt.show()
 # #     plt.close()
 
-# # grid2gif('/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/rotorPlane/*.tif',
-# #          '/anvil/scratch/x-smata/wrf_les_sweep/runs/gad_sweep/figs/uvel.gif')
+# # grid2gif('/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/rotorPlane/*.tif',
+# #          '/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/uvel.gif')
 
 print('Done.')

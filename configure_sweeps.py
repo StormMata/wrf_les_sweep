@@ -175,6 +175,7 @@ def create_directories(combinations, excluded_pairs, model):
 
         # TASK: Copy post-processing files
 
+        ##--------------------------------------------------------------------------------
         ## SUBTASK 1: turbine properties
         turbine_properties = current_path + '/windTurbines/' + turbine + '/turbineProperties.tbl'
 
@@ -222,6 +223,7 @@ def create_directories(combinations, excluded_pairs, model):
         with open(process_path, "w") as file:
             file.write(python_content)
 
+        ##--------------------------------------------------------------------------------
         ## SUBTASK 2: turbine location
 
         turbine_coords = current_path + '/windturbines-ij.dat'
@@ -252,18 +254,32 @@ def create_directories(combinations, excluded_pairs, model):
         # Replace "tower_yloc = ###" with the extracted y_loc
         python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
 
+        updated_content = content.replace('[SWEEP_NAME]', model)
+
         # Step 3: Write the modified content back to the same file, overwriting it
         with open(process_path, "w") as python_file:
             python_file.write(python_content)
 
+        ##--------------------------------------------------------------------------------
         ## SUBTASK 3:plotting file
 
         # Paths to your source (original) file and the destination (copy) file
         plot_template_path = tools_path + '/plot.py'
         plot_path          = sweep_path + '/plot.py'
 
-        # Copy the file without making any changes to it
+        # Step 1: Make a copy of the original file (preserving the original template)
         shutil.copyfile(plot_template_path, plot_path)
+
+        # Step 2: Read the content of the original file
+        with open(plot_path, "r") as file:
+            content = file.read()
+
+        # Step 3: Replace every instance of "gad_sweep" with "gal_sweep"
+        updated_content = content.replace('[SWEEP_NAME]', model)
+        
+        # Step 4: Write the modified content back to the original file (overwriting it)
+        with open(plot_path, "w") as file:
+            file.write(updated_content)
 
         case_num += 1
 
