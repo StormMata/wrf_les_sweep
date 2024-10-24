@@ -20,8 +20,8 @@ from rich.console import Console
 # shear = [-4, -2, 0, 2, 4]
 # veer  = [-4, -2, 0, 2, 4]
 
-shear = [0, 2]
-veer  = [0, 2]
+shear = [0]
+veer  = [0]
 
 # excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
 #                   (-4, 2),  (4, 2),
