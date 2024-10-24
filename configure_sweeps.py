@@ -226,7 +226,30 @@ def create_directories(combinations, excluded_pairs, model):
 
         turbine_coords = current_path + '/windturbines-ij.dat'
 
-        print(f'path: {turbine_coords}')
+        # print(f'path: {turbine_coords}')
+
+        extracted_values = {}
+
+        pattern = r"([+-]?\d+\.\d+)\s+([+-]?\d+\.\d+)\s+[+-]?\d+\.\d+\s+\d+"
+
+        # Step 1: Read the data file and extract the first set of x_loc and y_loc
+        with open(turbine_coords, "r") as data_file:
+            data_content = data_file.read()
+
+        # Find the first match for x and y locations
+        match = re.search(pattern, data_content)
+
+        x_loc = match.group(1)  # Extract x-location
+        y_loc = match.group(2)  # Extract y-location
+
+        with open(process_path, "w") as python_file:
+            python_content = python_file.read()
+
+        # Replace "tower_xloc = ###" with the extracted x_loc
+        python_content = re.sub(r"tower_xloc\s*=\s*###", f"tower_xloc = {x_loc}", python_content)
+
+        # Replace "tower_yloc = ###" with the extracted y_loc
+        python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
 
         case_num += 1
 
