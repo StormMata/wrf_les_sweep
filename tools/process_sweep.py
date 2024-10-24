@@ -30,9 +30,9 @@ remove_data = 0.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-throug
 
 casename = [r's0_v0', r's0_v2']
 
-diameter   = 199.0
-dhub       = 4.8
-hub_height = 378
+diameter   = ###
+dhub       = ###
+hub_height = ###
 Ntrb       = 1
 Nsct       = 45
 Nelm       = 45

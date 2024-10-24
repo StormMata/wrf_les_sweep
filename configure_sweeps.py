@@ -206,6 +206,22 @@ def create_directories(combinations, excluded_pairs, model):
         print(f'current path: {current_path}')
         print(f'path: {process_path}')
 
+        # Copy the original Python file to create a duplicate
+        shutil.copyfile(process_template_path, process_path)
+
+        # Step 3: Open the copied Python file and insert the values
+        with open(process_path, "r") as file:
+            python_content = file.read()
+
+        # Step 4: Replace placeholders with extracted values
+        python_content = python_content.replace("diameter   = ###", f"diameter   = {extracted_values['diameter']}")
+        python_content = python_content.replace("dhub       = ###", f"dhub       = {extracted_values['dhub']}")
+        python_content = python_content.replace("hub_height = ###", f"hub_height = {extracted_values['hub_height']}")
+
+        # Step 5: Save the changes to the copied Python file
+        with open(process_path, "w") as file:
+            file.write(python_content)
+
         case_num += 1
 
 # ==================================================================
