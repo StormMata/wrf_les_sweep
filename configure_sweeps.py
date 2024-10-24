@@ -256,7 +256,14 @@ def create_directories(combinations, excluded_pairs, model):
         with open(process_path, "w") as python_file:
             python_file.write(python_content)
 
-        print(f'path: {process_path}')
+        ## SUBTASK 3:plotting file
+
+        # Paths to your source (original) file and the destination (copy) file
+        plot_template_path = tools_path + '/plot.py'
+        plot_path          = sweep_path + '/plot.py'
+
+        # Copy the file without making any changes to it
+        shutil.copyfile(plot_template_path, plot_path)
 
         case_num += 1
 
