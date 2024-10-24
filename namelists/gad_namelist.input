@@ -84,7 +84,7 @@
  i_parent_start                      = 0,     18,    15,
  j_parent_start                      = 0,     40,    40,
  parent_grid_ratio                   = 1,     10,    10,
- parent_time_step_ratio              = 1,     40,    10,
+ parent_time_step_ratio              = 1,     20,    10,
  feedback                            = 0,
  smooth_option                       = 0,
  /
@@ -181,7 +181,7 @@
  sfs_opt                             = 0,      0,      0,
  m_opt                               = 0,      0,      0,
  damp_opt                            = 0,
- w_damping                           = 0,
+ w_damping                           = 1,
  zdamp                               = 100.,   100.,   100.,
  dampcoef                            = 0.003,  0.003,  0.003,
  khdif                               = 1.,      1.,      1.,
