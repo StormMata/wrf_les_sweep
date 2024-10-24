@@ -242,7 +242,8 @@ def create_directories(combinations, excluded_pairs, model):
         x_loc = match.group(1)  # Extract x-location
         y_loc = match.group(2)  # Extract y-location
 
-        with open(process_path, "w") as python_file:
+        # Step 2: Read the Python file and replace the placeholders
+        with open(process_path, "r") as python_file:
             python_content = python_file.read()
 
         # Replace "tower_xloc = ###" with the extracted x_loc
@@ -250,6 +251,10 @@ def create_directories(combinations, excluded_pairs, model):
 
         # Replace "tower_yloc = ###" with the extracted y_loc
         python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
+
+        # Step 3: Write the modified content back to the same file, overwriting it
+        with open(process_path, "w") as python_file:
+            python_file.write(python_content)
 
         case_num += 1
 
