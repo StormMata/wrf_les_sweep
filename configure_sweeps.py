@@ -17,18 +17,24 @@ from rich.console import Console
 # INPUTS
 # ==================================================================
 
-# shear = [-4, -2, 0, 2, 4]
-# veer  = [-4, -2, 0, 2, 4]
+shear = [-4, -2, 0, 2, 4]
+veer  = [-4, -2, 0, 2, 4]
 
-shear = [0]
-veer  = [0]
+# shear = [0]
+# veer  = [0]
 
 # excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
 #                   (-4, 2),  (4, 2),
 #                   (-4, -2), (4, -2),
 #                   (-4, -4), (-2, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
 
-excluded_pairs = [(0, 2), (2, 0)]
+excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
+                  (-4, 2),  (4, 2),
+                  (0, -4),  (0, 4),
+                  (-4, -2), (-2, -2), (0, -2), (2, -2), (4, -2),
+                  (-4, -4), (-2, -4), (0, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
+
+# excluded_pairs = [(0, 2), (2, 0)]
 
 GAD   = True
 GAL   = False
