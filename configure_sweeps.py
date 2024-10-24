@@ -174,7 +174,7 @@ def create_directories(combinations, excluded_pairs, model):
         os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
         # TASK: Copy post-processing files
-        text_file_path = current_path + '/windTurbines' + turbine + 'turbineProperties.tbl'
+        text_file_path = current_path + '/windTurbines/' + turbine + '/turbineProperties.tbl'
 
         print(f'path: {text_file_path}')
 
