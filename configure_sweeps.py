@@ -196,14 +196,15 @@ def create_directories(combinations, excluded_pairs, model):
                     extracted_values[key] = match.group(1)
 
         # Step 2: Open the original Python script and create a copy of it
+
+        sweep_path = base_dir + '/' + model
+
         process_template_path = tools_path + '/process_sweep.py'
-        # process_path          = current "copied_python_file.py"  # Name for the copied file   
+        process_path          = sweep_path +  '/process_sweep.py'
 
         print(f'path: {process_template_path}')
         print(f'current path: {current_path}')
-        var_temp = base_dir + '/' + model
-        print(f'base: {var_temp}')
-        # print(f'path: {process_path}')
+        print(f'path: {process_path}')
 
         case_num += 1
 
