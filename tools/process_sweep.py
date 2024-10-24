@@ -43,8 +43,8 @@ rho        = 1.225
 smearingDist = 3
 
 ## tower and rotor apex locations:
-tower_xloc = 597.0                                # Tower x-position in meters
-tower_yloc = 382.0                                # Tower y-position in meters
+tower_xloc = ###                                # Tower x-position in meters
+tower_yloc = ###                                # Tower y-position in meters
 
 #============================================================================================================
 # Main logic [generally no edits beyond this point]

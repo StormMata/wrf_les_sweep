@@ -174,9 +174,9 @@ def create_directories(combinations, excluded_pairs, model):
         os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
         # TASK: Copy post-processing files
-        turbine_properties = current_path + '/windTurbines/' + turbine + '/turbineProperties.tbl'
 
-        print(f'path: {turbine_properties}')
+        ## SUBTASK 1: turbine properties
+        turbine_properties = current_path + '/windTurbines/' + turbine + '/turbineProperties.tbl'
 
         extracted_values = {}
 
@@ -202,9 +202,9 @@ def create_directories(combinations, excluded_pairs, model):
         process_template_path = tools_path + '/process_sweep.py'
         process_path          = sweep_path +  '/process_sweep.py'
 
-        print(f'path: {process_template_path}')
-        print(f'current path: {current_path}')
-        print(f'path: {process_path}')
+        # print(f'path: {process_template_path}')
+        # print(f'current path: {current_path}')
+        # print(f'path: {process_path}')
 
         # Copy the original Python file to create a duplicate
         shutil.copyfile(process_template_path, process_path)
@@ -221,6 +221,12 @@ def create_directories(combinations, excluded_pairs, model):
         # Step 5: Save the changes to the copied Python file
         with open(process_path, "w") as file:
             file.write(python_content)
+
+        ## SUBTASK 2: turbine location
+
+        turbine_coords = current_path + '/windturbines-ij.dat'
+
+        print(f'path: {turbine_coords}')
 
         case_num += 1
 
