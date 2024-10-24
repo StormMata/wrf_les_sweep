@@ -174,9 +174,34 @@ def create_directories(combinations, excluded_pairs, model):
         os.chmod(base_dir + '/' + model_str + '_group_submit.sh' , stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
         # TASK: Copy post-processing files
-        text_file_path = current_path + '/windTurbines/' + turbine + '/turbineProperties.tbl'
+        turbine_properties = current_path + '/windTurbines/' + turbine + '/turbineProperties.tbl'
 
-        print(f'path: {text_file_path}')
+        print(f'path: {turbine_properties}')
+
+        extracted_values = {}
+
+        patterns = {
+        "hub_height": r"([\d.]+)\s+\"Hub height \[m\]\"",
+        "diameter":   r"([\d.]+)\s+\"Rotor diameter \[m\]\"",
+        "dhub":       r"([\d.]+)\s+\"Hub diameter \[m\]\"",
+        }
+
+        # Read the text file and search for the patterns
+        with open(turbine_properties, "r") as file:
+            content = file.read()
+
+            for key, pattern in patterns.items():
+                match = re.search(pattern, content)
+                if match:
+                    extracted_values[key] = match.group(1)
+
+        # Step 2: Open the original Python script and create a copy of it
+        process_template_path = tools_path + '/process_sweep.py'
+        # process_path          = current "copied_python_file.py"  # Name for the copied file   
+
+        print(f'path: {process_template_path}')
+        print(f'current path: {current_path}')
+        # print(f'path: {process_path}')
 
         case_num += 1
 
