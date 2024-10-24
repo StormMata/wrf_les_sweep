@@ -30,10 +30,10 @@
  &domains
  time_step                           = 0,
  time_step_fract_num                 = 10,
- time_step_fract_den                 = 25,
+ time_step_fract_den                 = 55,
  max_dom                             = 2,
  s_we                                = 1,     1,     1,
- e_we                                = 251,   411,   751,
+ e_we                                = 251,   651,   751,
  s_sn                                = 1,     1,     1,
  e_sn                                = 101,   191,   191,
  s_vert                              = 1,     1,     1,
@@ -100,7 +100,7 @@
  bldt                                = 0,     0,     0,
  cu_physics                          = 0,     0,     0,
  cudt                                = 0,     0,     0,
- isfflx                              = 0,
+ isfflx                              = 2,
 ! ====================================
 ! options for WRF-LES-GAL/GAD/GADrs:
  wind_wtp_opt                        = 0,     1,
