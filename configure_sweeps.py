@@ -201,7 +201,8 @@ def create_directories(combinations, excluded_pairs, model):
 
         print(f'path: {process_template_path}')
         print(f'current path: {current_path}')
-        print(f'base: {base_dir + '\/' + model}')
+        var_temp = base_dir + '/' + model
+        print(f'base: {var_temp}')
         # print(f'path: {process_path}')
 
         case_num += 1
