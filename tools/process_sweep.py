@@ -26,9 +26,7 @@ save_data = True
 save_period = 10.0 # in seconds
 remove_data = 0.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
 
-# casename = [r's0_v4', r'sn2_v2', r's0_v2', r's2_v2', r'sn4_v0', r'sn2_v0', r's0_v0', r's2_v0', r's4_v0', r'sn2_vn2', r's0_vn2', r's2_vn2', r's0_vn4']
-
-casename = [r's0_v0', r's0_v2']
+casenames = [SHEAR_COMBINATIONS]
 
 diameter   = [T_DIAMETER]
 dhub       = [H_DIAMETER]

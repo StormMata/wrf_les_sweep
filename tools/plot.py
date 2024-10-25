@@ -29,11 +29,8 @@ def grid2gif(image_str,output_gif):
     str1 = 'magick -delay 50 -loop 0 ' + image_str  + ' ' + output_gif
     subprocess.call(str1,shell=True)
 ###########################################################################
-# casenames = [r's0_v4', r'sn2_v2', r's0_v2', r's2_v2', r'sn4_v0', r'sn2_v0', r's0_v0', r's2_v0', r's4_v0', r'sn2_vn2', r's0_vn2', r's2_vn2', r's0_vn4']
 
-# casenames = [r's0_v0']
-
-casenames = [r's0_v0', r's0_v2']
+casenames = [SHEAR_COMBINATIONS]
 
 disk_avg = True
 contours = True

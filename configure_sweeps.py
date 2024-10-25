@@ -62,9 +62,7 @@ combinations = list(itertools.product(shear, veer))
 
 filtered_combinations  = [pair for pair in combinations if pair not in excluded_pairs]
 formatted_combinations = [f"r's{pair[0]}_v{pair[1]}'" for pair in filtered_combinations]
-casenames = [rf"s{str(pair[0]).replace('-', 'n')}_v{str(pair[1]).replace('-', 'n')}" for pair in filtered_combinations]
-
-print(f'FILTERED COMBINATIONS: {casenames}')
+casename_string        = [rf"s{str(pair[0]).replace('-', 'n')}_v{str(pair[1]).replace('-', 'n')}" for pair in filtered_combinations]
 
 # Helper function to format the directory name without negative signs
 def format_value(val):
@@ -283,6 +281,9 @@ def create_directories(combinations, excluded_pairs, model):
         # Insert outfile name
         python_content = python_content.replace('[OUT_FILE_NAME]', read_from)
 
+        # Insert shear combination list
+        python_content = python_content.replace('[SHEAR_COMBINATIONS]', casename_string)
+
         # Step 3: Write the modified content back to the same file, overwriting it
         with open(process_path, "w") as python_file:
             python_file.write(python_content)
@@ -303,6 +304,9 @@ def create_directories(combinations, excluded_pairs, model):
 
         # Step 3: Replace every instance of "gad_sweep" with "gal_sweep"
         updated_content = content.replace('[SWEEP_NAME]', model)
+
+        # Insert shear combination list
+        python_content = python_content.replace('[SHEAR_COMBINATIONS]', casename_string)
         
         # Step 4: Write the modified content back to the original file (overwriting it)
         with open(plot_path, "w") as file:
