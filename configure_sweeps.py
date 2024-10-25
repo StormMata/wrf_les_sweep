@@ -62,8 +62,9 @@ combinations = list(itertools.product(shear, veer))
 
 filtered_combinations  = [pair for pair in combinations if pair not in excluded_pairs]
 formatted_combinations = [f"r's{pair[0]}_v{pair[1]}'" for pair in filtered_combinations]
+casenames = [rf's{pair[0]}_v{pair[1]}' for pair in filtered_combinations]
 
-print(f'FILTERED COMBINATIONS: {formatted_combinations}')
+print(f'FILTERED COMBINATIONS: {casenames}')
 
 # Helper function to format the directory name without negative signs
 def format_value(val):
