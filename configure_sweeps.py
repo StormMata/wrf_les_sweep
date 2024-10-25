@@ -10,8 +10,8 @@ import itertools
 import subprocess
 
 from rich.table import Table
+from datetime import datetime
 from rich.console import Console
-
 
 # ==================================================================
 # INPUTS
@@ -214,11 +214,7 @@ def create_directories(combinations, excluded_pairs, model):
         sweep_path = base_dir + '/' + model
 
         process_template_path = tools_path + '/process_sweep.py'
-        process_path          = sweep_path +  '/process_sweep.py'
-
-        # print(f'path: {process_template_path}')
-        # print(f'current path: {current_path}')
-        # print(f'path: {process_path}')
+        process_path          = sweep_path + '/process_sweep.py'
 
         # Copy the original Python file to create a duplicate
         shutil.copyfile(process_template_path, process_path)
@@ -228,13 +224,13 @@ def create_directories(combinations, excluded_pairs, model):
             python_content = file.read()
 
         # Step 4: Replace placeholders with extracted values
-        # python_content = python_content.replace("diameter   = ###", f"diameter   = {extracted_values['diameter']}")
-        # python_content = python_content.replace("dhub       = ###", f"dhub       = {extracted_values['dhub']}")
-        # python_content = python_content.replace("hub_height = ###", f"hub_height = {extracted_values['hub_height']}")
-
         python_content = python_content.replace("[T_DIAMETER]", extracted_values['diameter'])
         python_content = python_content.replace("[H_DIAMETER]", extracted_values['dhub'])
         python_content = python_content.replace("[HUB_HEIGHT]", extracted_values['hub_height'])
+
+        # Insert timestamp
+        timestamp = datetime.now().strftime("Generated on %a %b %d %H:%M:%S %Y")
+        python_content = python_content.replace("[GENERATED_TIMESTAMP]", timestamp)
 
         # Step 5: Save the changes to the copied Python file
         with open(process_path, "w") as file:
@@ -262,12 +258,6 @@ def create_directories(combinations, excluded_pairs, model):
         # Step 2: Read the Python file and replace the placeholders
         with open(process_path, "r") as python_file:
             python_content = python_file.read()
-
-        # # Replace "tower_xloc = ###" with the extracted x_loc
-        # python_content = re.sub(r"tower_xloc\s*=\s*###", f"tower_xloc = {x_loc}", python_content)
-
-        # # Replace "tower_yloc = ###" with the extracted y_loc
-        # python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
         
         # Replace "tower_xloc = ###" with the extracted y_loc
         python_content = python_content.replace('[TOWER_X]', x_loc)
@@ -308,6 +298,9 @@ def create_directories(combinations, excluded_pairs, model):
 
         # Insert shear combination list
         updated_content = updated_content.replace('[SHEAR_COMBINATIONS]', casename_string_n)
+
+        # Insert timestamp
+        updated_content = updated_content.replace("[GENERATED_TIMESTAMP]", timestamp)
         
         # Step 4: Write the modified content back to the original file (overwriting it)
         with open(plot_path, "w") as file:

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Aug 16 09:00:00 2024
 
-@author: kale
+[GENERATED_TIMESTAMP]
+
 """
 
 import gc
@@ -26,7 +26,7 @@ save_data = True
 save_period = 10.0 # in seconds
 remove_data = 0.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
 
-casenames = [SHEAR_COMBINATIONS]
+casename = [SHEAR_COMBINATIONS]
 
 diameter   = [T_DIAMETER]
 dhub       = [H_DIAMETER]
