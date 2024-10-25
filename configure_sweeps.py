@@ -60,6 +60,10 @@ is_mac = platform.system() == "Darwin"
 # Create all combinations
 combinations = list(itertools.product(shear, veer))
 
+filtered_combinations = [pair for pair in combinations if pair not in excluded_pairs]
+
+print(f'FILTERED COMBINATIONS: {filtered_combinations}')
+
 # Helper function to format the directory name without negative signs
 def format_value(val):
     if val < 0:
