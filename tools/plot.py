@@ -624,20 +624,24 @@ if itqp:
         # induction
         ax[0].bar(ind[count], wrfles_rel_diff_ind, color=colors[count], edgecolor='black', alpha=alpha)
         ax[0].set_ylabel(r'$\mathrm{\mathbb{E}}_{\overline{a}}~[\%]$', fontsize=fontsize)
+        ax[0].text(ind[count], 3, f'{wrfles_rel_diff_ind[0]}\%', ha='center', fontsize=15)
 
         # thrust
         ax[1].bar(ind[count], wrfles_rel_diff_thrust, color=colors[count], edgecolor='black', alpha=alpha)
         ax[1].set_ylabel(r'$\mathrm{\mathbb{E}}_{\overline{T}}~[\%]$', fontsize=fontsize)
+        ax[1].text(ind[count], -0.5, f'{wrfles_rel_diff_thrust[0]}\%', ha='center', fontsize=15)
 
         # torque
         ax[2].bar(ind[count], wrfles_rel_diff_torque, color=colors[count], edgecolor='black', alpha=alpha)
         ax[2].set_ylabel(r'$\mathrm{\mathbb{E}}_{\overline{Q}}~[\%]$', fontsize=fontsize)
+        ax[2].text(ind[count], -2.5, f'{wrfles_rel_diff_torque[0]}\%', ha='center', fontsize=15)
 
         # power
         ax[3].bar(ind[count], wrfles_rel_diff_power, color=colors[count], edgecolor='black', alpha=alpha)
         ax[3].set_xticks(ind)
         ax[3].set_xticklabels(casenames)
         ax[3].set_ylabel(r'$\mathrm{\mathbb{E}}_{\overline{P}}~[\%]$', fontsize=fontsize)
+        ax[3].text(ind[count], -2.5, f'{wrfles_rel_diff_power[0]}\%', ha='center', fontsize=15)
 
     plt.savefig("/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/figs/rel_err_ind_thrust_torque_power.png", bbox_inches="tight", dpi=800)
     plt.show()

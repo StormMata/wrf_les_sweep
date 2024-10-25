@@ -4,6 +4,7 @@ old_runs/
 presentation_runs/
 5MW_test/
 10MW_test/
+5MW_sweep/
 
 # Prerequisites
 *.d

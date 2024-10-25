@@ -262,7 +262,7 @@ def create_directories(combinations, excluded_pairs, model):
         # Replace "tower_yloc = ###" with the extracted y_loc
         python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
 
-        updated_content = content.replace('[SWEEP_NAME]', model)
+        python_content = python_content.replace('[SWEEP_NAME]', model)
 
         # Step 3: Write the modified content back to the same file, overwriting it
         with open(process_path, "w") as python_file:
