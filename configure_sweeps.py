@@ -282,7 +282,7 @@ def create_directories(combinations, excluded_pairs, model):
         python_content = python_content.replace('[OUT_FILE_NAME]', read_from)
 
         # Insert shear combination list
-        casename_string_n = "[" + ", ".join(casename_string) + "]"
+        casename_string_n = "[" + ", ".join(f"r'{name}'" for name in casename_string) + "]"
         python_content = python_content.replace('[SHEAR_COMBINATIONS]', casename_string_n)
 
         # Step 3: Write the modified content back to the same file, overwriting it
