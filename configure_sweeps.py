@@ -301,7 +301,8 @@ def create_directories(combinations, excluded_pairs, model):
 
         # Insert timestamp
         updated_content = updated_content.replace("[GENERATED_TIMESTAMP]", timestamp)
-        updated_content = updated_content.replace("[MODEL_NAME]", timestamp)
+        updated_content = updated_content.replace("[TURBINE_NAME]", turbine)
+        updated_content = updated_content.replace("[MODEL_NAME]", model_str.upper())
         updated_content = updated_content.replace("[NUM_CASES]", str(len(filtered_combinations)))
         
         # Step 4: Write the modified content back to the original file (overwriting it)
