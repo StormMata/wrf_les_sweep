@@ -4,6 +4,10 @@
 
 [GENERATED_TIMESTAMP]
 
+Turbine: [TURBINE_NAME]
+Model:   [MODEL_NAME]
+Cases:   [NUM_CASES]
+
 """
 
 import math
