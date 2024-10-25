@@ -307,7 +307,7 @@ def create_directories(combinations, excluded_pairs, model):
         updated_content = content.replace('[SWEEP_NAME]', model)
 
         # Insert shear combination list
-        python_content = python_content.replace('[SHEAR_COMBINATIONS]', casename_string_n)
+        updated_content = updated_content.replace('[SHEAR_COMBINATIONS]', casename_string_n)
         
         # Step 4: Write the modified content back to the original file (overwriting it)
         with open(plot_path, "w") as file:
