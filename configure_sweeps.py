@@ -230,7 +230,11 @@ def create_directories(combinations, excluded_pairs, model):
 
         # Insert timestamp
         timestamp = datetime.now().strftime("Generated on %a %b %d %H:%M:%S %Y")
+        # Insert timestamp
         python_content = python_content.replace("[GENERATED_TIMESTAMP]", timestamp)
+        python_content = python_content.replace("[TURBINE_NAME]", turbine)
+        python_content = python_content.replace("[MODEL_NAME]", model_str.upper())
+        python_content = python_content.replace("[NUM_CASES]", str(len(filtered_combinations)))
 
         # Step 5: Save the changes to the copied Python file
         with open(process_path, "w") as file:
