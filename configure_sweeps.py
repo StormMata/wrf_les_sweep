@@ -40,12 +40,13 @@ GAD   = True
 GAL   = False
 GADrs = False
 
-base_dir      = "/anvil/scratch/x-smata/wrf_les_sweep/runs"
+base_dir      = '/anvil/scratch/x-smata/wrf_les_sweep/runs'
 wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
-library_path  = "/home/x-smata/libraries/libinsdir"
-sounding_path = "/anvil/scratch/x-smata/postprocessing/results"
-tools_path    = "/anvil/scratch/x-smata/wrf_les_sweep/tools"
+library_path  = '/home/x-smata/libraries/libinsdir'
+sounding_path = '/anvil/scratch/x-smata/postprocessing/results'
+tools_path    = '/anvil/scratch/x-smata/wrf_les_sweep/tools'
 turbine       = 'iea10MW'
+read_from     = 'wrfout_d02_0001-01-01_00_15_00'
 
 batch_submit  = True
 
@@ -223,9 +224,13 @@ def create_directories(combinations, excluded_pairs, model):
             python_content = file.read()
 
         # Step 4: Replace placeholders with extracted values
-        python_content = python_content.replace("diameter   = ###", f"diameter   = {extracted_values['diameter']}")
-        python_content = python_content.replace("dhub       = ###", f"dhub       = {extracted_values['dhub']}")
-        python_content = python_content.replace("hub_height = ###", f"hub_height = {extracted_values['hub_height']}")
+        # python_content = python_content.replace("diameter   = ###", f"diameter   = {extracted_values['diameter']}")
+        # python_content = python_content.replace("dhub       = ###", f"dhub       = {extracted_values['dhub']}")
+        # python_content = python_content.replace("hub_height = ###", f"hub_height = {extracted_values['hub_height']}")
+
+        python_content = python_content.replace("[T_DIAMETER]", extracted_values['diameter'])
+        python_content = python_content.replace("[H_DIAMETER]", extracted_values['dhub'])
+        python_content = python_content.replace("[HUB_HEIGHT]", extracted_values['hub_height'])
 
         # Step 5: Save the changes to the copied Python file
         with open(process_path, "w") as file:
@@ -235,8 +240,6 @@ def create_directories(combinations, excluded_pairs, model):
         ## SUBTASK 2: turbine location
 
         turbine_coords = current_path + '/windturbines-ij.dat'
-
-        # print(f'path: {turbine_coords}')
 
         extracted_values = {}
 
@@ -256,13 +259,23 @@ def create_directories(combinations, excluded_pairs, model):
         with open(process_path, "r") as python_file:
             python_content = python_file.read()
 
-        # Replace "tower_xloc = ###" with the extracted x_loc
-        python_content = re.sub(r"tower_xloc\s*=\s*###", f"tower_xloc = {x_loc}", python_content)
+        # # Replace "tower_xloc = ###" with the extracted x_loc
+        # python_content = re.sub(r"tower_xloc\s*=\s*###", f"tower_xloc = {x_loc}", python_content)
+
+        # # Replace "tower_yloc = ###" with the extracted y_loc
+        # python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
+        
+        # Replace "tower_xloc = ###" with the extracted y_loc
+        python_content = python_content.replace('[TOWER_X]', x_loc)
 
         # Replace "tower_yloc = ###" with the extracted y_loc
-        python_content = re.sub(r"tower_yloc\s*=\s*###", f"tower_yloc = {y_loc}", python_content)
+        python_content = python_content.replace('[TOWER_Y]', y_loc)
 
+        # Insert sweep name
         python_content = python_content.replace('[SWEEP_NAME]', model)
+
+        # Insert outfile name
+        python_content = python_content.replace('[OUT_FILE_NAME]', read_from)
 
         # Step 3: Write the modified content back to the same file, overwriting it
         with open(process_path, "w") as python_file:

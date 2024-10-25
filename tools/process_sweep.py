@@ -30,9 +30,9 @@ remove_data = 0.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-throug
 
 casename = [r's0_v0', r's0_v2']
 
-diameter   = ###
-dhub       = ###
-hub_height = ###
+diameter   = [T_DIAMETER]
+dhub       = [H_DIAMETER]
+hub_height = [HUB_HEIGHT]
 Ntrb       = 1
 Nsct       = 45
 Nelm       = 45
@@ -43,8 +43,8 @@ rho        = 1.225
 smearingDist = 3
 
 ## tower and rotor apex locations:
-tower_xloc = ###
-tower_yloc = ###
+tower_xloc = [TOWER_X]
+tower_yloc = [TOWER_Y]
 
 #============================================================================================================
 # Main logic [generally no edits beyond this point]
@@ -54,7 +54,7 @@ for case in casename:
 
     print(f'Loading data for {case}...')
 
-    file2read = netCDF4.Dataset(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/{case}/wrfout_d02_0001-01-01_00_15_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
+    file2read = netCDF4.Dataset(f'/anvil/scratch/x-smata/wrf_les_sweep/runs/[SWEEP_NAME]/{case}/[OUT_FILE_NAME]','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
     file2read.variables.keys()
 
     timeidx = wrf.extract_times(file2read, timeidx=wrf.ALL_TIMES, meta=False)
