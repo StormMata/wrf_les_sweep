@@ -36,8 +36,8 @@ excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
 
 # excluded_pairs = [(0, 2), (2, 0)]
 
-GAD   = True
-GAL   = False
+GAD   = False
+GAL   = True
 GADrs = False
 
 base_dir      = '/anvil/scratch/x-smata/wrf_les_sweep/runs'
