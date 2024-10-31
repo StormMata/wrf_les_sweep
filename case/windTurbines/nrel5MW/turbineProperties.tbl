@@ -1,7 +1,7 @@
 17       "Length of the blade element vector [-]"
 8        "Number of airfoils [-]"
 3        "Number of blades [-]"
-378.00    "Hub height [m]"
+378.00   "Hub height [m]"
 5.00     "Tower diameter [m]"
 126.00   "Rotor diameter [m]"
 3.00     "Hub diameter [m]"
