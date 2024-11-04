@@ -9,6 +9,9 @@ dtu_1/
 dtu_2/
 iea_1/
 runs_old/
+archive/
+10MW_run
+15MW_run
 
 # Prerequisites
 *.d

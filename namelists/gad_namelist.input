@@ -1,7 +1,7 @@
  &time_control
  run_days                            = 00,
  run_hours                           = 00,
- run_minutes                         = 5,
+ run_minutes                         = 2,
  run_seconds                         = 00,
  start_year                          = 0001, 0001, 0001,
  start_month                         = 01,   01,   01,
@@ -30,7 +30,7 @@
  &domains
  time_step                           = 0,
  time_step_fract_num                 = 10,
- time_step_fract_den                 = 50,
+ time_step_fract_den                 = 25,
  max_dom                             = 2,
  s_we                                = 1,     1,     1,
  e_we                                = 251,   411,   751,
@@ -84,7 +84,7 @@
  i_parent_start                      = 0,     10,    15,
  j_parent_start                      = 0,     40,    40,
  parent_grid_ratio                   = 1,     10,    10,
- parent_time_step_ratio              = 1,     20,    10,
+ parent_time_step_ratio              = 1,     10,    10,
  feedback                            = 0,
  smooth_option                       = 0,
  /
