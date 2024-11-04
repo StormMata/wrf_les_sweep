@@ -8,6 +8,7 @@ presentation_runs/
 dtu_1/
 dtu_2/
 iea_1/
+runs_old/
 
 # Prerequisites
 *.d
