@@ -1,9 +1,9 @@
-37       "Length of the blade element vector [-]"
+38       "Length of the blade element vector [-]"
 7        "Number of airfoils [-]"
 3        "Number of blades [-]"
 378.00   "Hub height [m]"
 8.00     "Tower diameter [m]"
-178.00   "Rotor diameter [m]"
+181.00   "Rotor diameter [m]"
 5.60     "Hub diameter [m]"
 12.00    "Nacelle length [m]"
 1.00     "Nacelle drag coefficient [-]"
@@ -58,3 +58,4 @@
 86.955 	1.138400 	0.2400 	-3.427960  "FFA-W3-211"  7
 87.870 	1.138400 	0.2400 	-3.427960  "FFA-W3-211"  7
 88.546 	1.138400 	0.2400 	-3.427960  "FFA-W3-211"  7
+100.54 	1.138400 	0.2400 	-3.427960  "FFA-W3-211"  7

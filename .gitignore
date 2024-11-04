@@ -5,6 +5,9 @@ presentation_runs/
 5MW_test/
 10MW_test/
 5MW_sweep/
+dtu_1/
+dtu_2/
+iea_1/
 
 # Prerequisites
 *.d
