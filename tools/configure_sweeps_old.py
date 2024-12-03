@@ -8,6 +8,7 @@ import shutil
 import platform
 import itertools
 import subprocess
+import numpy as np
 
 from rich.table import Table
 from datetime import datetime
@@ -21,20 +22,26 @@ from rich.console import Console
 # veer  = [-4, -2, 0, 2, 4]
 
 shear = [0]
-veer  = [0]
+veer  = [-3, -2, -1, 0, 1, 2, 3]
+# veer  = np.array([-3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3])
+
+# shear = [0]
+# veer  = [0]
 
 # excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
 #                   (-4, 2),  (4, 2),
 #                   (-4, -2), (4, -2),
 #                   (-4, -4), (-2, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
 
-excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
-                  (-4, 2),  (4, 2),
-                  (-4, 0),  (4, 0),
-                  (-4, -2), (-2, -2), (0, -2), (2, -2), (4, -2),
-                  (-4, -4), (-2, -4), (0, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
+# excluded_pairs = [(-4, 4),  (-2, 4), (2, 4), (4, 4),
+#                   (-4, 2),  (4, 2),
+#                   (-4, 0),  (4, 0),
+#                   (-4, -2), (-2, -2), (0, -2), (2, -2), (4, -2),
+#                   (-4, -4), (-2, -4), (0, -4), (2, -4), (4, -4)]  # Add any pairs you want to exclude here
 
 # excluded_pairs = [(0, 2), (2, 0)]
+
+excluded_pairs = []
 
 GAD   = True
 GAL   = False
@@ -46,7 +53,7 @@ library_path  = '/home/x-smata/libraries/libinsdir'
 sounding_path = '/anvil/scratch/x-smata/postprocessing/results'
 tools_path    = '/anvil/scratch/x-smata/wrf_les_sweep/tools'
 turbine       = 'iea10MW'
-read_from     = 'wrfout_d02_0001-01-01_00_15_00'
+read_from     = 'wrfout_d02_0001-01-01_00_00_00'
 
 batch_submit  = True
 
@@ -59,10 +66,27 @@ is_mac = platform.system() == "Darwin"
 
 # Create all combinations
 combinations = list(itertools.product(shear, veer))
+# combinations = list(itertools.product(shear, np.round(veer,1)))
 
 filtered_combinations  = [pair for pair in combinations if pair not in excluded_pairs]
 formatted_combinations = [f"r's{pair[0]}_v{pair[1]}'" for pair in filtered_combinations]
 casename_string        = [rf"s{str(pair[0]).replace('-', 'n')}_v{str(pair[1]).replace('-', 'n')}" for pair in filtered_combinations]
+# casename_string = [
+#     rf"s{str(int(pair[0] * 10)).replace('-', 'n').lstrip('0') or '0'}_v{str(int(pair[1] * 10)).replace('-', 'n').lstrip('0') or '0'}"
+#     for pair in combinations if pair not in excluded_pairs
+# ]
+
+
+
+
+
+
+
+
+
+
+# print(combinations)
+# print(combinations)
 
 # Helper function to format the directory name without negative signs
 def format_value(val):
@@ -121,6 +145,11 @@ def create_directories(combinations, excluded_pairs, model):
         shear_str = format_value(pair[0])
         veer_str = format_value(pair[1])
         dir_name = f"s{shear_str}_v{veer_str}"
+
+        # shear_str = str(int(round(pair[0] * 10))).replace('-', 'n')
+        # veer_str = str(int(round(pair[1] * 10))).replace('-', 'n')
+        # dir_name = f"s{shear_str}_v{veer_str}"
+
         current_path = base_dir + '/' + model + '/' + dir_name
 
         # TASK: Create case directory

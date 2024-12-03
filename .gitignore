@@ -12,6 +12,9 @@ runs_old/
 archive/
 10MW_run
 15MW_run
+iea10MW_validation/
+iea15MW_validation/
+iea22MW_validation/
 
 # Prerequisites
 *.d

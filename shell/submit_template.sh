@@ -1,10 +1,9 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --ntasks=72
-#SBATCH --time=36:00:00
-#SBATCH -J job_name
-#SBATCH -A ees240114
-##SBATCH -A atm170028
+#SBATCH --ntasks={PH_NTASKS}
+#SBATCH --time={PH_TIME}
+#SBATCH -J {PH_JOB_NAME}
+#SBATCH -A {PH_ALLOCATION}
 #SBATCH -p wholenode
 #SBATCH --mail-user=storm@mit.edu
 #SBATCH --mail-type=all

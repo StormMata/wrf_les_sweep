@@ -13,6 +13,8 @@
 0.944    "Electrical efficiency of the generator [-]"
 6.00     "Delta (Turbine tilt) [deg]"
 4.00     "Zeta (Blade precone) [deg]"
+1        "Rotation direction [-], 1: clockwise, -1: counter-clockwise, 0: no rotational effects (GAD/GADrs; only for experimental use)"
+0.77     "CT, Constant thrust coefficient for GAD/GADrs. It should be applied when rotational effects are neglected. E.g., CT=0.77 for Uinf=8.0 m s-1. Only for experimental use."
 2.00     "blade_c_eps_1 [-], x or chord-wise"
 2.00     "blade_c_eps_2 [-], y or thickness-wise"
 2.00     "blade_c_eps_3 [-], z or radial-wise"
