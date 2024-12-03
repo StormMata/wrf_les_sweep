@@ -22,11 +22,11 @@ from rich.console import Console
 # shear = [0]
 # veer  = [-3.5, -2, -1, 0, 1, 2.5, 3]
 
-# shear = [0]
-# veer  = [0]
+shear = [0]
+veer  = [0]
 
-shear = [-2, 0, 2]
-veer  = [-2, 0, 2]
+# shear = [-2, 0, 2]
+# veer  = [-2, 0, 2]
 
 excluded_pairs = [(1,0), (1,1)]
 
@@ -92,16 +92,16 @@ def determine_format(shear, veer):
     all_values = shear + veer
     
     # Determine max integer and fractional digits
-    max_int_digits = max(len(str(int(abs(val)))) for val in all_values)
+    max_int_digits  = max(len(str(int(abs(val)))) for val in all_values)
     max_frac_digits = max(len(str(val).split('.')[-1]) if '.' in str(val) else 0 for val in all_values)
     
     return max_int_digits, max_frac_digits
 
-def run_subprocess(command, mac_flag=False):
+def run_subprocess(command, mac_flag = False):
     """Run subprocess commands with OS compatibility."""
     if platform.system() == "Darwin" and mac_flag:
         command.insert(2, "")
-    subprocess.run(command, check=True)
+    subprocess.run(command, check = True)
 
 def create_symlinks(target_dir):
     """Create symbolic links in the target directory."""
@@ -113,12 +113,12 @@ def create_symlinks(target_dir):
         f"{wrf_path}/run/README.tslist",
     ]
     for link in links:
-        subprocess.run([f"ln -s {link} {target_dir}"], shell=True)
+        subprocess.run([f"ln -s {link} {target_dir}"], shell = True)
 
-def copy_files(source, destination, dirs_exist_ok=True):
+def copy_files(source, destination, dirs_exist_ok = True):
     """Copy files and directories from source to destination."""
     if os.path.isdir(source):
-        shutil.copytree(source, destination, dirs_exist_ok=dirs_exist_ok)
+        shutil.copytree(source, destination, dirs_exist_ok = dirs_exist_ok)
     else:
         shutil.copy2(source, destination)
 
@@ -139,7 +139,7 @@ def parse_turbineProperties(file_path):
             key_value_match = re.match(r'^\s*([\d\.\-]+)\s+"([^"]+)"\s*$', line)
             if key_value_match:
                 value = float(key_value_match.group(1))  # Convert value to float
-                key = key_value_match.group(2)  # Extract key as string
+                key   = key_value_match.group(2)  # Extract key as string
                 config[key] = value  # Store in dictionary with key-value pair
 
     return float(config['Rotor diameter [m]']), float(config['Hub height [m]'])
@@ -150,7 +150,8 @@ def create_sounding(current_path, figure_path, figure_name, pair):
     zmid  = 0 # [nondimensional] middle point in z-direction
     eps   = 0.8
 
-    znondim = np.linspace(-zhub/D, (1.1 * zhub/D), 189, endpoint=True)
+    # znondim = np.linspace(-zhub/D , (1.1 * zhub/D), 189, endpoint = True)
+    znondim = np.arange(-zhub/D, (1.1 * zhub/D), 2/D)
 
     if ((pair[0] == 0) & (pair[1] == 0)) :        # uniform
         uinf     = np.full_like(znondim, 1)
@@ -174,8 +175,6 @@ def create_sounding(current_path, figure_path, figure_name, pair):
         uinf     = (1 + eps * np.tanh(A * (znondim - zmid) / eps))
         vinf     = eps * np.tanh(v_inflow * A * (znondim - zmid) / eps)
 
-    znondim = np.linspace(-zhub/D, (1.1 * zhub/D), 189, endpoint=True)
-
     ######################################################################
     # dimensionalize all variables
     z = abs((znondim*D)+zhub)
@@ -196,10 +195,10 @@ def create_sounding(current_path, figure_path, figure_name, pair):
 
         # Create a figure with a custom gridspec layout
         fig, axs = plt.subplots(
-            nrows=2,
-            ncols=3,
-            figsize=(10, 6),
-            constrained_layout=True,
+            nrows = 2,
+            ncols = 3,
+            figsize = (10, 6),
+            constrained_layout = True,
         )
 
         # Merge the third column into a single subplot
@@ -219,7 +218,7 @@ def create_sounding(current_path, figure_path, figure_name, pair):
         # velocity profiles
         axs[0, 0].axhline(-0.5, linestyle='dashed', linewidth=1, dashes=(8, 3))
         axs[0, 0].axhline(zmid, linestyle='dotted', linewidth=1)
-        axs[0, 0].axhline(0.5, linestyle='dashed', linewidth=1, dashes=(8, 3))
+        axs[0, 0].axhline(0.5,  linestyle='dashed', linewidth=1, dashes=(8, 3))
         axs[0, 0].axvline((Ufst/Ufst)-1, linestyle='dotted', linewidth=1)
         axs[0, 0].axvline(Ufst/Ufst, linestyle='dotted', linewidth=1)
         axs[0, 0].plot(uinf[:], znondim, color='#0000FF', linestyle='solid', label=r'$u_{inflow}$')
@@ -233,7 +232,7 @@ def create_sounding(current_path, figure_path, figure_name, pair):
         # wind direction
         axs[0, 1].axhline(-0.5, linestyle='dashed', linewidth=1, dashes=(8, 3))
         axs[0, 1].axhline(zmid, linestyle='dotted', linewidth=1)
-        axs[0, 1].axhline(0.5, linestyle='dashed', linewidth=1, dashes=(8, 3))
+        axs[0, 1].axhline(0.5,  linestyle='dashed', linewidth=1, dashes=(8, 3))
         axs[0, 1].axvline(270.0, linestyle='dotted', linewidth=1)
         axs[0, 1].plot(wdir[:], znondim, color='#006400', linestyle='solid', label=r'_nolegend_')
         axs[0, 1].set_xlim([180.0, 330.0])
@@ -323,15 +322,15 @@ combinations = [pair for pair in product(shear, veer) if pair not in excluded_pa
 int_digits, frac_digits = determine_format(shear, veer)
 
 # Display combinations
-table = Table(title="Combinations")
-table.add_column("Case", justify="right")
-table.add_column("Shear", justify="right", style="green")
-table.add_column("Veer", justify="right", style="red")
+table = Table(title = "Combinations")
+table.add_column("Case",  justify = "right")
+table.add_column("Shear", justify = "right", style = "green")
+table.add_column("Veer",  justify = "right", style = "red")
 
 # Format each value for table display with decimal points
 for idx, (s, v) in enumerate(combinations, start=1):
     shear_str = f"{s: {int_digits + frac_digits + 1}.{frac_digits}f}"
-    veer_str = f"{v: {int_digits + frac_digits + 1}.{frac_digits}f}"
+    veer_str  = f"{v: {int_digits + frac_digits + 1}.{frac_digits}f}"
     table.add_row(str(idx), shear_str, veer_str)
 
 console.print(table)
@@ -358,7 +357,7 @@ def create_directories(combinations, excluded_pairs, console, header, model):
     model_str = model.split('_')[0].lower()
 
     # Create batch submit file if requested
-    batch_file_path = f"{base_dir}/{model_str}_group_submit.sh"
+    batch_file_path = f"{base_dir}/group_submit_{model_str}.sh"
 
     if batch_submit:
         with open(batch_file_path, 'w') as batch_file:
