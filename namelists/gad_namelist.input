@@ -87,6 +87,8 @@
  parent_time_step_ratio              = 1,     10,    10,
  feedback                            = 0,
  smooth_option                       = 0,
+!nproc_x                             = 0,
+!nproc_y                             = 0,
  /
 
  &physics
