@@ -15,6 +15,7 @@ archive/
 iea10MW_validation/
 iea15MW_validation/
 iea22MW_validation/
+rot_validation/
 
 # Prerequisites
 *.d
