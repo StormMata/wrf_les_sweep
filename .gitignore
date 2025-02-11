@@ -16,6 +16,7 @@ iea10MW_validation/
 iea15MW_validation/
 iea22MW_validation/
 rot_validation/
+stampede_validation/
 
 # Prerequisites
 *.d

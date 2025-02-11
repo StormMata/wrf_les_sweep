@@ -15,6 +15,7 @@ from rich.live import Live
 from rich.table import Table
 from itertools import product
 from rich.console import Console
+from scipy.interpolate import interp1d
 
 # ==================================================================
 # INPUTS
@@ -25,11 +26,11 @@ from rich.console import Console
 # shear = [0]
 # veer  = [4]
 
-# shear = [-4, -2, 0, 2, 4]
-# veer  = [-4, -2, 0, 2, 4]
+shear = [-4, -2, 0, 2, 4]
+veer  = [-4, -2, 0, 2, 4]
 
-shear = [0]
-veer  = [2]
+# shear = [0]
+# veer  = [0]
 
 excluded_pairs = [(-4,4), (-2,4), (2,4), (4,4),
                   (-4,2), (4,2),
@@ -41,7 +42,7 @@ excluded_pairs = [(-4,4), (-2,4), (2,4), (4,4),
 #                   (-4,-2), (-2,-2), (2,-2), (4,-2),
 #                   (-4,-4), (-2,-4), (2,-4), (4,-4)]
 
-max_sample    = 10
+max_sample    = 7
 
 Ufst          = 7.0
 
@@ -49,19 +50,26 @@ GAD           = True
 GAL           = False
 GADrs         = False
 
-base_dir      = '/anvil/scratch/x-smata/wrf_les_sweep/profile_tests'
-wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
-library_path  = '/home/x-smata/libraries/libinsdir'
-tools_path    = '/anvil/scratch/x-smata/wrf_les_sweep/tools'
-turbine       = 'iea10MW'
+# base_dir      = '/anvil/scratch/x-smata/wrf_les_sweep/profile_tests'
+# wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
+# library_path  = '/home/x-smata/libraries/libinsdir'
+
+base_dir      = '/scratch/09909/smata/wrf_les_sweep/runs/15MW'
+wrf_path      = '/work2/09909/smata/stampede3/WRF-4.6.0'
+library_path  = ''
+
+turbine       = 'iea15MW'
 read_from     = 'wrfout_d02_0001-01-01_00_00_00'
 batch_submit  = True
 
 plot_profiles = True
 plot_domain   = True
 
-allocation    = 'atm170028'
+allocation    = 'EES230042'
+# allocation    = 'ATM170028'
 runtime       = '48:00:00'
+
+system        = 'stampede'
 
 plt.rcParams['text.usetex'] = True
 
@@ -159,35 +167,62 @@ def parse_turbineProperties(file_path):
 
 def generate_v(x, D, shear):
     # Define the regions
-    x1, x2 = -(D/2) * 1.75 , (D/2) * 1.75 # Region boundaries
-    # Calculate the constant values based on Region 2
-    value_region1 = shear/10 * x1  # f(x_1) for Region 1
-    value_region3 = shear/10 * x2  # f(x_2) for Region 3
+    x1, x2 = -(D / 2) * 2, (D / 2) * 2  # Region boundaries
+    
+    # Initialize the result as zeros
+    v = np.zeros_like(x, dtype=float)
 
-    # Define the piecewise behavior
-    return np.piecewise(
-        x,
-        [x < x1, (x >= x1) & (x <= x2), x > x2],
-        [value_region1, lambda x: shear/10 * x, value_region3],
-    )
+    # Region 1: x < x1
+    v[x < x1] = shear / 10 * x1
+
+    # Region 2: x1 <= x <= x2 (linear function with constant slope)
+    mask_region2 = (x >= x1) & (x <= x2)
+    v[mask_region2] = shear / 10 * x[mask_region2]
+
+    # Region 3: x > x2
+    v[x > x2] = shear / 10 * x2
+
+    return v
 
 def generate_u(x, D, shear):
+    # # Define the regions
+    # x1, x2 = -(1/2) * 1.75 , (1/2) * 1.75 # Region boundaries
+    # # Calculate the constant values based on Region 2
+    # value_region1 = shear/10 * x1  # f(x_1) for Region 1
+    # value_region3 = shear/10 * x2  # f(x_2) for Region 3
+
+    # if shear == 0:
+    #     return np.full_like(x, 1)
+    
+    # else:
+    #     # Define the piecewise behavior
+    #     return np.piecewise(
+    #         x,
+    #         [x < x1, (x >= x1) & (x <= x2), x > x2],
+    #         [value_region1, lambda x: shear/10 * x, value_region3],
+    #     ) + 1
+
     # Define the regions
-    x1, x2 = -(1/2) * 1.75 , (1/2) * 1.75 # Region boundaries
-    # Calculate the constant values based on Region 2
-    value_region1 = shear/10 * x1  # f(x_1) for Region 1
-    value_region3 = shear/10 * x2  # f(x_2) for Region 3
+    x1, x2 = -(1 / 2) * 1.95, (1 / 2) * 1.95  # Region boundaries
+
+    # Initialize the result as ones (to handle the "+1" offset)
+    u = np.ones_like(x, dtype=float)
 
     if shear == 0:
-        return np.full_like(x, 1)
+        # If shear is zero, return an array of ones
+        return u
     
-    else:
-        # Define the piecewise behavior
-        return np.piecewise(
-            x,
-            [x < x1, (x >= x1) & (x <= x2), x > x2],
-            [value_region1, lambda x: shear/10 * x, value_region3],
-        ) + 1
+    # Region 1: x < x1 (constant value)
+    u[x < x1] += shear / 10 * x1
+
+    # Region 2: x1 <= x <= x2 (linear function with constant slope)
+    mask_region2 = (x >= x1) & (x <= x2)
+    u[mask_region2] += shear / 10 * x[mask_region2]
+
+    # Region 3: x > x2 (constant value)
+    u[x > x2] += shear / 10 * x2
+
+    return u
 
 def smooth_piecewise(y, sigma, dx):
     # Create a Gaussian kernel with a given standard deviation (sigma)
@@ -208,7 +243,7 @@ def smooth_piecewise(y, sigma, dx):
 def create_sounding(current_path, figure_path, figure_name, pair, height):
     """Create sounding files based on shear and veer settings"""
 
-    # zmid  = 0 # [nondimensional] middle point in z-direction
+    zmid  = 0 # [nondimensional] middle point in z-direction
 
     # # eps_x = [0,]
 
@@ -250,13 +285,17 @@ def create_sounding(current_path, figure_path, figure_name, pair, height):
     # dimensionalize all variables
     # z = abs((znondim*D)+zhub)
     # zmid = 0
-    z = np.arange(-1000, 1000, 2)
+    z = np.arange(-1000, 1000, 1)
 
     uinf = generate_u(z/D, D, pair[0])
-    uinf = smooth_piecewise(uinf, 30, z[1]-z[0])
+    uinf = smooth_piecewise(uinf, 35, z[1]-z[0])
 
-    wdir = generate_v(z, D, pair[1])
-    wdir = -smooth_piecewise(wdir, 30, z[1]-z[0])
+    wdir     = generate_v(z, D, pair[1])
+    wdir     = -smooth_piecewise(wdir, 35, z[1]-z[0])
+    cor_func = interp1d(wdir, z, kind='linear')
+    z_corr   = cor_func(0)
+    dir_func = interp1d(z-z_corr,wdir,kind='linear', fill_value='extrapolate')
+    wdir     = dir_func(z)
     
     vinf = np.full_like(z,1) * np.sin(np.deg2rad(wdir))
 
@@ -267,7 +306,7 @@ def create_sounding(current_path, figure_path, figure_name, pair, height):
     v[v == -0.00] = 0.0
 
     # calculate wind direction in compass coordinates
-    wdir = np.mod(180+np.rad2deg(np.arctan2(u, v)), 360)
+    # wdir = np.mod(180+np.rad2deg(np.arctan2(u, v)), 360)
 
     wdir = wdir + 270
 
@@ -482,7 +521,11 @@ def create_directories(combinations, excluded_pairs, console, header, model):
         params['print_table'] = False
         params['slice_loc']   = max_sample
 
+        # print('point 1')
+
         namelist, turbtuple = preproc.validate(opt_params=params)
+
+        # print('point 2')
 
         ntasks = namelist.nproc_x * namelist.nproc_y
 
@@ -542,8 +585,8 @@ def create_directories(combinations, excluded_pairs, console, header, model):
             file_map = {
                 f'./namelists/{model_str}_namelist.input': 'namelist.input',
                 f'./turbines/{model_str}_windturbines-ij.dat': 'windturbines-ij.dat',
-                './shell/export_libs_load_modules.sh': 'export_libs_load_modules.sh',
-                './shell/submit_template.sh': 'submit.sh',
+                f'./shell/export_libs_load_modules_{system}.sh': 'export_libs_load_modules.sh',
+                f'./shell/submit_template_{system}.sh': 'submit.sh',
             }
             for src, dst in file_map.items():
                 copy_files(src, os.path.join(current_path, dst))
