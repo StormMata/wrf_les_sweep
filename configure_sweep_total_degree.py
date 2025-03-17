@@ -23,29 +23,24 @@ from scipy.interpolate import interp1d
 # shear = [0]
 # veer  = [-3.5, -2, -1, 0, 1, 2.5, 3]
 
-# shear = [0]
+# shear = [-2, 0, 2]
 # veer  = [4]
 
-# shear = [-4, -2, 0, 2, 4]
-# veer  = [-4, -2, 0, 2, 4]
+shear = [-6, -3, 0, 3, 6]
+veer  = [-8, -4, 0, 4, 8]
 
-shear = [0]
-# shear = [2, 4]
-# veer  = [-4,-3.5,-3,-2.5,-2,-1.5,-1,-0.5,0]
+# shear = [0]
+# veer  = [0]
 
-veer  = np.arange(-4,4.25,0.25)
-
-# excluded_pairs = [(-4,4), (-2,4), (2,4), (4,4),
-#                   (-4,2), (4,2),
-#                   (-4,-2), (4,-2),
-#                   (-4,-4), (-2,-4), (2,-4), (4,-4)]
+excluded_pairs = [(-6,8), (-3,8), (3,8), (6,8),
+                  (-6,4), (6,4),
+                  (-6,-4), (6,-4),
+                  (-6,-8), (-3,-8), (3,-8), (6,-8)]
 
 # excluded_pairs = [(-4,4),  (-2,4),  (2,4),  (4,4),
 #                   (-4,2),  (-2,2),  (2,2),  (4,2),
 #                   (-4,-2), (-2,-2), (2,-2), (4,-2),
 #                   (-4,-4), (-2,-4), (2,-4), (4,-4)]
-
-excluded_pairs = []
 
 max_sample    = 7
 
@@ -59,19 +54,19 @@ GADrs         = False
 # wrf_path      = '/home/x-smata/to_storm/WRF-4.6.0'
 # library_path  = '/home/x-smata/libraries/libinsdir'
 
-base_dir      = '/scratch/09909/smata/wrf_les_sweep/runs/just_for_profiles'
+base_dir      = '/scratch/09909/smata/wrf_les_sweep/runs/constant_magnitude/10MW'
 wrf_path      = '/work2/09909/smata/stampede3/WRF-4.6.0'
 library_path  = ''
 
-turbine       = 'iea15MW'
+turbine       = 'iea10MW'
 read_from     = 'wrfout_d02_0001-01-01_00_00_00'
 batch_submit  = True
 
 plot_profiles = True
 plot_domain   = True
 
-allocation    = 'EES230042'
-# allocation    = 'ATM170028'
+# allocation    = 'EES230042'
+allocation    = 'ATM170028'
 runtime       = '48:00:00'
 
 system        = 'stampede'
@@ -171,6 +166,7 @@ def parse_turbineProperties(file_path):
     return float(config['Rotor diameter [m]']), float(config['Hub height [m]'])
 
 def generate_v(x, D, shear):
+
     # Define the regions
     x1, x2 = -(D / 2) * 2, (D / 2) * 2  # Region boundaries
     
@@ -178,14 +174,20 @@ def generate_v(x, D, shear):
     v = np.zeros_like(x, dtype=float)
 
     # Region 1: x < x1
-    v[x < x1] = shear / 10 * x1
+    if shear == 0:
+        v[x < x1] = 0
+    else:
+        v[x < x1] = -(shear * 10) 
 
     # Region 2: x1 <= x <= x2 (linear function with constant slope)
     mask_region2 = (x >= x1) & (x <= x2)
-    v[mask_region2] = shear / 10 * x[mask_region2]
+    v[mask_region2] = (shear * 10) / D * x[mask_region2]
 
     # Region 3: x > x2
-    v[x > x2] = shear / 10 * x2
+    if shear == 0:
+        v[x > x2] = 0
+    else:
+        v[x > x2] = (shear * 10)
 
     return v
 
@@ -208,26 +210,34 @@ def generate_u(x, D, shear):
     #     ) + 1
 
     # Define the regions
-    x1, x2 = -(1 / 2) * 1.95, (1 / 2) * 1.95  # Region boundaries
+    x1, x2 = -(D / 2) * 2, (D / 2) * 2  # Region boundaries
+    
+    # Initialize the result as zeros
+    v = np.ones_like(x, dtype=float)
 
-    # Initialize the result as ones (to handle the "+1" offset)
-    u = np.ones_like(x, dtype=float)
 
     if shear == 0:
         # If shear is zero, return an array of ones
-        return u
-    
-    # Region 1: x < x1 (constant value)
-    u[x < x1] += shear / 10 * x1
+        return v
+
+    # Region 1: x < x1
+    if shear == 0:
+        v[x < x1] = 0
+    else:
+        v[x < x1] = -(shear) 
 
     # Region 2: x1 <= x <= x2 (linear function with constant slope)
     mask_region2 = (x >= x1) & (x <= x2)
-    u[mask_region2] += shear / 10 * x[mask_region2]
+    v[mask_region2] = (shear) / D * x[mask_region2]
 
-    # Region 3: x > x2 (constant value)
-    u[x > x2] += shear / 10 * x2
+    # Region 3: x > x2
+    if shear == 0:
+        v[x > x2] = 0
+    else:
+        v[x > x2] = (shear)
 
-    return u
+    return 1 + v
+
 
 def smooth_piecewise(y, sigma, dx):
     # Create a Gaussian kernel with a given standard deviation (sigma)
@@ -292,7 +302,7 @@ def create_sounding(current_path, figure_path, figure_name, pair, height):
     # zmid = 0
     z = np.arange(-1000, 1000, 1)
 
-    uinf = generate_u(z/D, D, pair[0])
+    uinf = generate_u(z, D, pair[0]/Ufst)
     uinf = smooth_piecewise(uinf, 35, z[1]-z[0])
 
     wdir     = generate_v(z, D, pair[1])
@@ -378,21 +388,22 @@ def create_sounding(current_path, figure_path, figure_name, pair, height):
         axs[1, 0].axhline(zhub, linestyle='dotted', linewidth=1)
         axs[1, 0].axhline(zhub+(0.5*D), linestyle='dashed', linewidth=1, dashes=(8, 3))
         axs[1, 0].axvline(0.0, linestyle='dotted', linewidth=1)
-        axs[1, 0].axvline(Ufst, linestyle='dotted', linewidth=1)
-
-        # axs[1, 0].axvline(5, linestyle='dotted', linewidth=1)
-        # axs[1, 0].axvline(6, linestyle='dotted', linewidth=1)
-        # axs[1, 0].axvline(8, linestyle='dotted', linewidth=1)
-        # axs[1, 0].axvline(9, linestyle='dotted', linewidth=1)
-
-        axs[1, 0].plot(u[:]-1.4/2, z, color='#0000FF', linestyle='solid', label=r'$u_{inflow}$')
-
-        # axs[1, 0].plot(u[:]-1.4/2, z, color='#0000FF', linestyle='solid', label=r'$u_{inflow}$')
+        axs[1, 0].axvline(Ufst, linestyle='-', linewidth=1)
+        axs[1, 0].plot(u[:], z, color='#0000FF', linestyle='solid', label=r'$u_{inflow}$')
         axs[1, 0].plot(v[:], z, color='#E50000', linestyle='solid', label=r'$v_{inflow}$')
         axs[1, 0].set_xlim([-Ufst, Ufst*2])
         axs[1, 0].set_ylim([0, height])
         axs[1, 0].set_xticks(np.arange(-8, Ufst+10, 4))
         # axs[1, 0].set_yticks(np.arange(min(z), max(z)+250.0, 250.0))
+        axs[1, 0].axvline([11], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([10], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([9], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([8], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([6], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([5], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([4], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([3], linestyle='dotted', linewidth=1)
+        axs[1, 0].axvline([2], linestyle='dotted', linewidth=1)
         axs[1, 0].set_xlabel(r'$u_{i}~[\textrm{m~s$^{-1}$}]$')
         axs[1, 0].set_ylabel(r'$z~[\textrm{m}]$')
         
@@ -400,10 +411,11 @@ def create_sounding(current_path, figure_path, figure_name, pair, height):
         axs[1, 1].axhline(zhub-(0.5*D), linestyle='dashed', linewidth=1, dashes=(8, 3))
         axs[1, 1].axhline(zhub, linestyle='dotted', linewidth=1)
         axs[1, 1].axhline(zhub+(0.5*D), linestyle='dashed', linewidth=1, dashes=(8, 3))
-        axs[1, 1].axvline(270.0, linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline(270.0, linestyle='-', linewidth=1)
         axs[1, 1].plot(wdir[:], z, color='#006400', linestyle='solid', label=r'_nolegend_')
-        test_z    = np.linspace((-0.5*D),(0.5*D), 20)
-        test_line = -pair[1]/10 * test_z
+        test_z    = np.array([(-0.5*D),(0.5*D)])
+        test_line = np.array([pair[1]* 5, -pair[1]* 5])
+        # test_line = -pair[1]/10 * test_z
         axs[1, 1].plot(test_line + 270, test_z + zhub, color='orange', linestyle='solid', label=r'_nolegend_')
 
         tip_deg = np.interp(zhub-0.5*D,z,wdir)
@@ -412,6 +424,18 @@ def create_sounding(current_path, figure_path, figure_name, pair, height):
 
         if wdir[-1] <= 180:
             axs[1, 1].text(275, 660, f"RESVERSE FLOW", fontsize=6, color='r', ha='left', fontweight='bold')
+
+
+        axs[1, 1].axvline([220], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([230], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([240], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([250], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([260], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([280], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([290], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([300], linestyle='dotted', linewidth=1)
+        axs[1, 1].axvline([310], linestyle='dotted', linewidth=1)
+
 
         axs[1, 1].set_xlim([170.0, 370.0])
         axs[1, 1].set_ylim([0, height])

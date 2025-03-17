@@ -50,3 +50,7 @@ stampede_validation/
 *.exe
 *.out
 *.app
+
+# Images
+
+*.png

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --nodes=3
+#SBATCH --nodes=2
 #SBATCH --ntasks={PH_NTASKS}
 #SBATCH --time={PH_TIME}
 #SBATCH -J {PH_JOB_NAME}
