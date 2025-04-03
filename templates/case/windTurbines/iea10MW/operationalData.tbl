@@ -1,3 +1,3 @@
-2 "WindSpeed [m/s]" "Pitch [deg]" "Rot. speed [rpm]" "Aero power [kW]" "Aero thrust [kN]"
- 4.00 	0.000 	7.144 	 3152.143 	 824.836
-25.00 	0.000 	7.144 	 3152.143 	 824.836
+2 "WindSpeed [m/s]" "Pitch [deg]" "Rot. speed [rpm]" "Aero power [kW]" "Aero thrust [kN]" "CT [-]"
+ 4.00     0.0000     7.1440    3147.2830        836.0838    0.8967
+25.00     0.0000     7.1440    3147.2830        836.0838    0.8967

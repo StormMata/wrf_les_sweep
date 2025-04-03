@@ -84,6 +84,7 @@
  cu_physics                          = 0,     0,     0,
  cudt                                = 0,     0,     0,
  isfflx                              = 2,
+ wind_wtp_shapiro                    = .true.
 ! ====================================
 ! options for WRF-LES-GAL/GAD/GADrs:
  wind_wtp_opt                        = 0,     2,
