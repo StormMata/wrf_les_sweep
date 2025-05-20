@@ -3,7 +3,7 @@
 #SBATCH --ntasks={PH_NTASKS}
 #SBATCH --time={PH_TIME}
 #SBATCH -J {PH_JOB_NAME}
-#SBATCH --account={PH_ALLOCATION}
+#SBATCH --account=TG-{PH_ALLOCATION}
 #SBATCH -p {PH_PARTITION}
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=storm@mit.edu
