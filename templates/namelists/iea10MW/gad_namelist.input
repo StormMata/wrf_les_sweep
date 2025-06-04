@@ -1,7 +1,7 @@
  &time_control
  run_days                            = 00,
  run_hours                           = 00,
- run_minutes                         = 15,
+ run_minutes                         = 10,
  run_seconds                         = 00,
  start_year                          = 0001, 0001, 0001,
  start_month                         = 01,   01,   01,
@@ -33,9 +33,9 @@
  time_step_fract_den                 = 25,
  max_dom                             = 2,
  s_we                                = 1,     1,     1,
- e_we                                = 201,   221,   751,
+ e_we                                = 251,   301,   751,
  s_sn                                = 1,     1,     1,
- e_sn                                = 111,   251,   191,
+ e_sn                                = 151,   361,   191,
  s_vert                              = 1,     1,     1,
  e_vert                              = 187,   187,   187,
  eta_levels                          = 1.00000, 0.99443, 0.98886, 0.98329, 0.97773,
@@ -82,13 +82,13 @@
  grid_id                             = 1,     2,     2,
  parent_id                           = 0,     1,     1,
  i_parent_start                      = 0,     10,    15,
- j_parent_start                      = 0,     43,    40,
+ j_parent_start                      = 0,     57,    40,
  parent_grid_ratio                   = 1,     10,    10,
  parent_time_step_ratio              = 1,     10,    10,
  feedback                            = 0,
  smooth_option                       = 0,
- nproc_x                             = 7,
- nproc_y                             = 11,
+ nproc_x                             = 8,
+ nproc_y                             = 13,
  /
 
  &physics
@@ -103,7 +103,6 @@
  cu_physics                          = 0,     0,     0,
  cudt                                = 0,     0,     0,
  isfflx                              = 2,
- wind_wtp_shapiro                    = .true.,
 ! ====================================
 ! options for WRF-LES-GAL/GAD/GADrs:
  wind_wtp_opt                        = 0,     2,
