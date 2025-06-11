@@ -1,7 +1,7 @@
  &time_control
  run_days                            = 00,
  run_hours                           = 00,
- run_minutes                         = 10,
+ run_minutes                         = 15,
  run_seconds                         = 00,
  start_year                          = 0001, 0001, 0001,
  start_month                         = 01,   01,   01,
@@ -103,6 +103,7 @@
  cu_physics                          = 0,     0,     0,
  cudt                                = 0,     0,     0,
  isfflx                              = 2,
+ wind_wtp_shapiro                    = .true.,
 ! ====================================
 ! options for WRF-LES-GAL/GAD/GADrs:
  wind_wtp_opt                        = 0,     2,
