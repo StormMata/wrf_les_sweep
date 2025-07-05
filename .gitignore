@@ -1,5 +1,4 @@
 # Directories
-runs/
 old_runs/
 presentation_runs/
 5MW_test/
@@ -17,6 +16,8 @@ iea15MW_validation/
 iea22MW_validation/
 rot_validation/
 stampede_validation/
+run/archive/
+
 
 # Prerequisites
 *.d
@@ -51,6 +52,29 @@ stampede_validation/
 *.out
 *.app
 
-# Images
-
+# Images and data
 *.png
+*.npz
+*.npy
+rsl.*
+wrfout_*
+wrfinput_*
+runs/**/*.dat
+
+# Other
+runs/**/*autorun_wrf
+runs/**/*autorun_wrf_restart
+runs/**/*CMakeLists.txt
+runs/**/*export_libs_load_modules.sh
+runs/**/*input_sounding.SGP
+runs/**/*iofield_lists
+runs/**/*log.*
+runs/**/*namelist.input.SGP
+runs/**/*namelist.input_shalconv
+runs/**/*namelist.output
+runs/**/*README.*
+runs/**/*slurm*
+runs/**/*_bk.tbl
+runs/**/*pitchController*
+runs/**/*speedController*
+runs/**/*copy.tbl
