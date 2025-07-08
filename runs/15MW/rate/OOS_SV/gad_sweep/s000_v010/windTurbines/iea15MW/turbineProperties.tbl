@@ -1,0 +1,35 @@
+10       "Length of the blade element vector [-]"
+8        "Number of airfoils [-]"
+3        "Number of blades [-]"
+378.00   "Hub height [m]"
+10.00    "Tower diameter [m]"
+242.0    "Rotor diameter [m]"
+7.90     "Hub diameter [m]"
+12.00    "Nacelle length [m]"
+0.50     "Nacelle drag coefficient [-]"
+0.50     "Tower drag coefficient [-]"
+0.1      "OverHang [m]"
+0.0      "UndSling [m]"
+0.9576   "Electrical efficiency of the generator [-]"
+0.00     "Delta (Turbine tilt) [deg]"
+0.00     "Zeta (Blade precone) [deg]"
+1        "Rotation direction [-], 1: clockwise, -1: counter-clockwise, 0: no rotational effects (GAD/GADrs; only for experimental use)"
+0.77     "CT, Constant thrust coefficient for GAD/GADrs. It should be applied when rotational effects are neglected. E.g., CT=0.77 for Uinf=8.0 m s-1. Only for experimental use."
+1.00     "blade_c_eps_1 [-], x or chord-wise"
+1.00     "blade_c_eps_2 [-], y or thickness-wise"
+1.00     "blade_c_eps_3 [-], z or radial-wise"
+2.00     "nacelle_c_eps [-]"
+2.00     "tower_c_eps [-]"
+150.00   "Inflow location [m]"
+0.5      "Yaw rate [deg/s]"
+1000.00  "Yaw error threshold [(deg)^2*(seconds)]
+  3.950  5.2000  0.6286  15.5946  "circular"         1 "r [m]" "Chord [m]" "Thickness [% of chord]" "Twist angle (gamma) [deg]" "Airfoil name [-]" "Airfoil ID [-]"
+  6.291  5.2087  0.3953  15.5879  "circular"         1
+ 21.507  5.6466  0.1254  11.0363  "SNL-FFA-W3-500"   2
+ 32.647  5.7018  0.0834   7.1828  "FFA-W3-360"       3
+ 42.441  5.1498  0.0579   4.7397  "FFA-W3-330blend"  4
+ 55.356  4.4824  0.0387   2.5665  "FFA-W3-301"       5
+ 66.884  3.9644  0.0283   1.2201  "FFA-W3-270blend"  6
+ 78.652  3.5007  0.0213   0.1852  "FFA-W3-241"       7
+ 94.283  2.8977  0.0147  -1.5674  "FFA-W3-211"       8
+121.000  0.5000  0.0020  -1.2424  "FFA-W3-211"       8
