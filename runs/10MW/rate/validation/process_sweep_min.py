@@ -25,7 +25,6 @@ save_data = True
 save_period = 10.0 # in seconds
 remove_data = 10.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
 
-
 casenames = [
 r'sn0300_vn2500',
 r'sn0300_vn1500',
@@ -75,6 +74,14 @@ r's0100_v0350',
 r's0100_v0750',
 r's0100_v1500',
 r's0100_v2500',
+r's0200_vn2500',
+r's0200_vn1500',
+r's0200_vn0750',
+r's0200_vn0350',
+r's0200_v0350',
+r's0200_v0750',
+r's0200_v1500',
+r's0200_v2500',
 r's0300_vn2500',
 r's0300_vn1500',
 r's0300_vn0750',

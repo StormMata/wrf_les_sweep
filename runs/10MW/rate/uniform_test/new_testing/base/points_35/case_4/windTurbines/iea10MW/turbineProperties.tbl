@@ -1,0 +1,60 @@
+35       "Length of the blade element vector [-]"
+7        "Number of airfoils [-]"
+3        "Number of blades [-]"
+378.00   "Hub height [m]"
+8.00     "Tower diameter [m]"
+199.00   "Rotor diameter [m]"
+4.80     "Hub diameter [m]"
+12.00    "Nacelle length [m]"
+0.50     "Nacelle drag coefficient [-]"
+0.50     "Tower drag coefficient [-]"
+0.10     "OverHang [m]"
+0.0      "UndSling [m]"
+0.944    "Electrical efficiency of the generator [-]"
+0.00     "Delta (Turbine tilt) [deg]"
+0.00     "Zeta (Blade precone) [deg]"
+1        "Rotation direction [-], 1: clockwise, -1: counter-clockwise, 0: no rotational effects (GAD/GADrs; only for experimental use)"
+0.77     "CT, Constant thrust coefficient for GAD/GADrs. It should be applied when rotational effects are neglected. E.g., CT=0.77 for Uinf=8.0 m s-1. Only for experimental use."
+1.00     "blade_c_eps_1 [-], x or chord-wise"
+1.00     "blade_c_eps_2 [-], y or thickness-wise"
+1.00     "blade_c_eps_3 [-], z or radial-wise"
+2.00     "nacelle_c_eps [-]"
+2.00     "tower_c_eps [-]"
+150.00   "Inflow location [m]"
+0.5      "Yaw rate [deg/s]"
+1000.00  "Yaw error threshold [(deg)^2*(seconds)]
+ 1.000	4.6319	0.5840	11.9247	"cylinder"	        1
+ 6.560	4.8390	0.3521	11.4233	"cylinder"	        1
+ 9.340	5.0460	0.2581	10.9220	"cylinder"	        1
+12.110	5.2531	0.2071	10.4206	"cylinder"	        1
+14.880	5.4601	0.1752	9.9193	"FFA-W3-360"	    2
+17.660	5.6672	0.1532	9.4179	"FFA-W3-360"	    2
+20.430	5.8743	0.1373	8.9165	"FFA-W3-360"	    2
+23.210	5.9571	0.1226	7.8563	"FFA-W3-360"	    2
+25.980	5.9728	0.1098	6.5521	"FFA-W3-330blend"   3
+28.760	5.7513	0.0955	6.0568	"FFA-W3-330blend"	3
+31.530	5.5298	0.0837	5.5615	"FFA-W3-330blend"	3
+34.300	5.3082	0.0739	5.0662	"FFA-W3-330blend"	3
+37.080	5.0867	0.0655	4.5709	"FFA-W3-330blend"	3
+39.850	4.8652	0.0583	4.0756	"FFA-W3-301"	    4
+42.630	4.6437	0.0520	3.5803	"FFA-W3-301"	    4
+45.400	4.4222	0.0465	3.0849	"FFA-W3-301"	    4
+48.180	4.2007	0.0416	2.5896	"FFA-W3-301"	    4
+50.950	3.9759	0.0373	2.0917	"FFA-W3-301"	    4
+53.720	3.7359	0.0332	1.5811	"FFA-W3-301"        4
+56.500	3.4960	0.0295	1.0706	"FFA-W3-270blend"	5
+59.270	3.2569	0.0262	0.5603	"FFA-W3-270blend"	5
+62.050	3.0547	0.0235	0.0580	"FFA-W3-270blend"	5
+64.820	2.8525	0.0210	-0.4442	"FFA-W3-241"	    6
+67.600	2.6502	0.0187	-0.9465	"FFA-W3-241"	    6
+70.370	2.4371	0.0165	-1.1304	"FFA-W3-241"	    6
+73.140	2.2142	0.0145	-1.0263	"FFA-W3-241"	    6
+75.920	1.9912	0.0125	-0.9222	"FFA-W3-241"	    6
+78.690	1.7683	0.0107	-0.8181	"FFA-W3-241"	    6
+81.470	1.5454	0.0091	-0.7140	"FFA-W3-241"	    6
+84.240	1.3224	0.0075	-0.6099	"FFA-W3-211"	    7
+87.020	1.0995	0.0060	-0.5057	"FFA-W3-211"	    7
+89.790	0.8765	0.0047	-0.4016	"FFA-W3-211"	    7
+92.560	0.6536	0.0034	-0.2975	"FFA-W3-211"	    7
+95.340	0.4306	0.0022	-0.1934	"FFA-W3-211"	    7
+99.750	0.2077	0.0010	-0.0893	"FFA-W3-211"	    7
