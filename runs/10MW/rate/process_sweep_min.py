@@ -23,101 +23,52 @@ np.seterr(divide='ignore',invalid='ignore')
 save_data = True
 
 save_period = 10.0 # in seconds
-remove_data = 10.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
-
-# casenames = [
-# r's000_vn200',
-# r's000_vn100',
-# r's000_vn050',
-# r's000_vn025',
-# r's000_v000',
-# r's000_v025',
-# r's000_v050',
-# r's000_v100',
-# r's000_v200'
-# ]
-
-#casenames = [
-#r's010_v000',
-#r's020_v000',
-#r's030_v000',
-#r'sn010_v000',
-#r'sn020_v000',
-#r'sn030_v000'
-#]
+remove_data = 9.0 # in minutes;  discard first xxx minutes (e.g., ~2 flow-through times)
 
 casenames = [
-r'sn030_vn200',
-r'sn030_vn100',
-r'sn030_vn050',
-r'sn030_vn025',
-r'sn030_v000',
-r'sn030_v025',
-r'sn030_v050',
-r'sn030_v100',
-r'sn030_v200',
-r'sn020_vn200',
-r'sn020_vn100',
-r'sn020_vn050',
-r'sn020_vn025',
-r'sn020_v000',
-r'sn020_v025',
-r'sn020_v050',
-r'sn020_v100',
-r'sn020_v200',
-r'sn010_vn200',
-r'sn010_vn100',
-r'sn010_vn050',
-r'sn010_vn025',
-r'sn010_v000',
-r'sn010_v025',
-r'sn010_v050',
-r'sn010_v100',
-r'sn010_v200',
-r's000_vn200',
-r's000_vn100',
-r's000_vn050',
-r's000_vn025',
-r's000_v000',
-r's000_v025',
-r's000_v050',
-r's000_v100',
-r's000_v200',
-r's010_vn200',
-r's010_vn100',
-r's010_vn050',
-r's010_vn025',
-r's010_v000',
-r's010_v025',
-r's010_v050',
-r's010_v100',
-r's010_v200',
-r's020_vn200',
-r's020_vn100',
-r's020_vn050',
-r's020_vn025',
-r's020_v000',
-r's020_v025',
-r's020_v050',
-r's020_v100',
-r's020_v200',
-r's030_vn200',
-r's030_vn100',
-r's030_vn050',
-r's030_vn025',
-r's030_v000',
-r's030_v025',
-r's030_v050',
-r's030_v100',
-r's030_v200'
+r'sn04_vn20',
+r'sn04_vn10',
+r'sn04_vn05',
+r'sn04_v00',
+r'sn04_v05',
+r'sn04_v10',
+r'sn04_v20',
+r'sn02_vn20',
+r'sn02_vn10',
+r'sn02_vn05',
+r'sn02_v00',
+r'sn02_v05',
+r'sn02_v10',
+r'sn02_v20',
+r's00_vn20',
+r's00_vn10',
+r's00_vn05',
+r's00_v00',
+r's00_v05',
+r's00_v10',
+r's00_v20',
+r's02_vn20',
+r's02_vn10',
+r's02_vn05',
+r's02_v00',
+r's02_v05',
+r's02_v10',
+r's02_v20',
+r's04_vn20',
+r's04_vn10',
+r's04_vn05',
+r's04_v00',
+r's04_v05',
+r's04_v10',
+r's04_v20'
 ]
 
 diameter   = 199.0
 dhub       = 4.80
 hub_height = 378.00
 Ntrb       = 1
-Nsct       = 158
-Nelm       = 26
+Nsct       = 160
+Nelm       = 30
 uinf       = 7.0
 rho        = 1.225
 
@@ -136,7 +87,7 @@ for count,case in enumerate(casenames):
 
     print(f'Working on {count + 1}/{len(casenames)}: {case}.\n')
 
-    file2read = netCDF4.Dataset(f'/scratch/09909/smata/wrf_les_sweep/runs/10MW/rate/gad_sweep/{case}/wrfout_d02_0001-01-01_00_00_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
+    file2read = netCDF4.Dataset(f'/scratch/09909/smata/wrf_les_sweep/runs/10MW/rate/LES_data/gad_sweep/{case}/wrfout_d02_0001-01-01_00_00_00','r',mmap=False) # type: ignore # Read Netcdf-type WRF output file
     file2read.variables.keys()
 
 
@@ -266,6 +217,6 @@ for count,case in enumerate(casenames):
     var_holder['bpz']         = bpz
     var_holder['shapiroM']    = shapiroM
 
-    np.savez( os.path.join(f'/scratch/09909/smata/wrf_les_sweep/runs/10MW/rate/gad_sweep/{case}_lite.npz'),**var_holder)
+    np.savez( os.path.join(f'/scratch/09909/smata/wrf_les_sweep/runs/10MW/rate/LES_data/gad_sweep/{case}_lite.npz'),**var_holder)
 
 del var_holder
